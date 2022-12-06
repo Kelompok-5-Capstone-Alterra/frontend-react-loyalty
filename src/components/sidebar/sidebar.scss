@@ -1,0 +1,126 @@
+@import "../../assets/styles/variable.scss";
+
+.sidebardashboard {
+  @include flex(row, flex-start, flex-start, 0);
+  width: 100vw;
+  height: 100vh;
+  .left {
+    width: 15vw;
+    height: 100vh;
+    padding: 2rem 0;
+    background-color: $blue300;
+    @include flex(column, flex-start, center, 2rem);
+    .menu {
+      @include flex(column, flex-start, flex-start, 0);
+      width: 100%;
+      .link {
+        text-decoration: none;
+        width: 100%;
+        p {
+          @include flex(row, flex-start, center, 0);
+          width: 100%;
+          padding: 1rem 2rem;
+          font-size: 1.3rem;
+          color: $white100;
+          transition: $fastIO;
+          font-weight: 700;
+          cursor: pointer;
+          span {
+            margin-right: 1rem;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+          }
+        }
+      }
+      .link:hover {
+        background-color: $blue200;
+        transition: $fastIO;
+      }
+      .link-active {
+        text-decoration: none;
+        width: 100%;
+        p {
+          @include flex(row, flex-start, center, 0);
+          width: 100%;
+          padding: 1rem 2rem;
+          font-size: 1.3rem;
+          color: $white100;
+          background-color: $blue200;
+          font-weight: 700;
+          cursor: pointer;
+          span {
+            margin-right: 1rem;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+          }
+        }
+      }
+    }
+  }
+  .right {
+    @include flex(column, flex-start, flex-start, 0);
+    width: 85vw;
+    height: 100vh;
+    .navbar {
+      position: relative;
+      height: 10vh;
+      width: 100%;
+      background-color: $white100;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      .role {
+        @include flex(row, center, center, 1rem);
+        position: absolute;
+        top: 1.5rem;
+        right: 2rem;
+        cursor: pointer;
+        p {
+          font-size: 1.5rem;
+          color: $blue200;
+          display: flex;
+          align-items: center;
+        }
+        h1 {
+          font-size: 1.2rem;
+          color: $blue200;
+        }
+      }
+      .roleactive {
+        @include flex(row, center, center, 1rem);
+        position: absolute;
+        top: 4rem;
+        right: 3.2rem;
+        background-color: $white100;
+        border-radius: 10px;
+        padding: 10px;
+        transition: $mediumIO;
+        cursor: pointer;
+        &:hover {
+          background-color: $blue200;
+          transition: $mediumIO;
+          p,
+          h1 {
+            color: $white100;
+          }
+        }
+        p {
+          font-size: 1.5rem;
+          color: $blue200;
+          display: flex;
+          align-items: center;
+        }
+        h1 {
+          font-size: 1.2rem;
+          color: $blue200;
+        }
+      }
+    }
+    .content {
+      width: 85vw;
+      height: 90vh;
+      padding: 2%;
+      overflow: auto;
+    }
+  }
+}

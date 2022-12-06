@@ -1,19 +1,37 @@
-import Navbar from "./components/navbar/navbar";
-import Home from "./components/home/home";
-import About from "./components/about/about";
-import Feature from "./components/feature/feature";
-import Contact from "./components/contact/contact";
+import { Route, Routes } from "react-router-dom";
+import Sidebar from "./components/sidebar/sidebar";
+import Agen from "./pages/agen/agen";
+import Beranda from "./pages/beranda";
+import Berkas from "./pages/berkas";
+import Kategori from "./pages/kategori/kategori";
+import Keuangan from "./pages/keuangan";
+import Koin from "./pages/koin";
+import LandingPage from "./pages/landingPage";
+import Pembayaran from "./pages/pembayaran";
+import Transaksi from "./pages/transaksi";
 
 function App() {
   return (
-    <div className="landingpage">
-      <Navbar />
-      <Home />
-      <About />
-      <Feature />
-      <Contact />
-    </div>
+    <Routes>
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/*" element={<RouterAdmin />} />
+    </Routes>
   );
 }
 
 export default App;
+
+const RouterAdmin = () => (
+  <Sidebar>
+    <Routes>
+      <Route path="beranda" element={<Beranda />} />
+      <Route path="agen" element={<Agen />} />
+      <Route path="transaksi" element={<Transaksi />} />
+      <Route path="koin" element={<Koin />} />
+      <Route path="kategori" element={<Kategori />} />
+      <Route path="keuangan" element={<Keuangan />} />
+      <Route path="pembayaran" element={<Pembayaran />} />
+      <Route path="berkas" element={<Berkas />} />
+    </Routes>
+  </Sidebar>
+);
