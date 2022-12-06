@@ -8,6 +8,9 @@ import Keuangan from "./pages/keuangan";
 import Koin from "./pages/koin";
 import LandingPage from "./pages/landingPage";
 import Pembayaran from "./pages/pembayaran";
+import AddProduk from "./pages/produk/addProduk";
+import EditProduk from "./pages/produk/editProduk";
+import Produk from "./pages/produk/produk";
 import Transaksi from "./pages/transaksi";
 
 function App() {
@@ -28,6 +31,9 @@ const RouterAdmin = () => (
       <Route path="agen" element={<Agen />} />
       <Route path="transaksi" element={<Transaksi />} />
       <Route path="koin" element={<Koin />} />
+      <Route path="produk" element={<Produk />} />
+      <Route path="produk/add-produk" element={<AddProduk />} />
+      <Route path="produk/edit-produk" element={<EditProduk />} />
       <Route path="kategori" element={<Kategori />} />
       <Route path="keuangan" element={<Keuangan />} />
       <Route path="pembayaran" element={<Pembayaran />} />
