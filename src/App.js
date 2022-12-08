@@ -3,6 +3,8 @@ import Sidebar from "./components/sidebar/sidebar";
 import Agen from "./pages/agen/agen";
 import Beranda from "./pages/beranda";
 import Berkas from "./pages/berkas";
+import AddKategori from "./pages/kategori/addKategori";
+import EditKategori from "./pages/kategori/editKategori";
 import Kategori from "./pages/kategori/kategori";
 import Keuangan from "./pages/keuangan";
 import Koin from "./pages/koin";
@@ -35,6 +37,8 @@ const RouterAdmin = () => (
       <Route path="produk/add-produk" element={<AddProduk />} />
       <Route path="produk/edit-produk" element={<EditProduk />} />
       <Route path="kategori" element={<Kategori />} />
+      <Route path="kategori/add-kategori" element={<AddKategori />} />
+      <Route path="kategori/edit-kategori" element={<EditKategori />} />
       <Route path="keuangan" element={<Keuangan />} />
       <Route path="pembayaran" element={<Pembayaran />} />
       <Route path="berkas" element={<Berkas />} />
