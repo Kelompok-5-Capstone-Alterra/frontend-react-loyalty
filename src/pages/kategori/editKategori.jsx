@@ -34,7 +34,7 @@ function EditKategori() {
   return (
     <section className="addProdukSection">
       <div className="top">
-        <button onClick={() => navigate("/produk")}>
+        <button onClick={() => navigate("/kategori")}>
           <FaIcons.FaArrowLeft />
         </button>
         <h1>Edit Kategori Anda</h1>
