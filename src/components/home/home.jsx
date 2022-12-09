@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import circle from "../../assets/img/circle.svg";
 import triplephone from "../../assets/img/triplephone.svg";
 import "./home.scss";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 function Home() {
+  useEffect(() => {
+    AOS.init();
+  }, []);
+
   return (
     <section className="home" id="beranda">
       <div className="left">
@@ -18,7 +24,13 @@ function Home() {
       </div>
       <div className="right">
         <img className="circle" src={circle} alt="circle" />
-        <img className="triplephone" src={triplephone} alt="triplephone" />
+        <img
+          className="triplephone"
+          data-aos="slide-up"
+          data-aos-duration="2000"
+          src={triplephone}
+          alt="triplephone"
+        />
       </div>
     </section>
   );
