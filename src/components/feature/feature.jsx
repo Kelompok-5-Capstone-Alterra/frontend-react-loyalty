@@ -11,7 +11,12 @@ function Feature() {
   );
   return (
     <section className="feature" id="fitur">
-      <div className="left">
+      <div
+        className="left"
+        data-aos="fade-right"
+        data-aos-duration="2000"
+        data-aos-delay="2000"
+      >
         <Card
           title="Riwayat Transaksi"
           paragraph="SOMI bisa lihat transaksi yang udah SOMI lakuin lhoo.. sebagai bukti bahwa SOMI sudah melakukan transaksi."
@@ -29,9 +34,19 @@ Uuuuhhh makin untung kan....."
       </div>
       <div className="center">
         <h1>Fiturnya apa aja?</h1>
-        <img src={phone} alt="phone" />
+        <img
+          data-aos="fade-down-right"
+          data-aos-duration="2000"
+          src={phone}
+          alt="phone"
+        />
       </div>
-      <div className="right">
+      <div
+        className="right"
+        data-aos="fade-left"
+        data-aos-duration="2000"
+        data-aos-delay="2000"
+      >
         <Card
           title="Saldo SOMI"
           paragraph="SOMI bisa top-up saldo di DIGO sebagai modal utama buat SOMI agar transaksi lebih mudah dilakukan. Jangan Khawatir pasti nya dapat KOIN juga dong...."

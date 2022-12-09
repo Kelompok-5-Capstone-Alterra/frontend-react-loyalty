@@ -20,7 +20,7 @@ function About() {
       <div className="left">
         <img className="phone" src={phone} alt="phone" />
       </div>
-      <div className="right">
+      <div className="right" data-aos="slide-left" data-aos-duration="2000">
         <h1>DIGO app itu apasih?</h1>
         <p>
           Aplikasi ini merupakan aplikasi agen penjualan berupa pulsa, paket
