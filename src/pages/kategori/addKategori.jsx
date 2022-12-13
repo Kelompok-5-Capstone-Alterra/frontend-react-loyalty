@@ -1,12 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import * as FaIcons from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { API } from "../../auth";
+import AuthContext from "../../context/AuthProvider";
 
 function AddKategori() {
-  const navigate = useNavigate();
+  const [state] = useContext(AuthContext);
   const [form, setForm] = useState({
     namaKategori: "",
   });
+  const Token = state.user.token;
+  const navigate = useNavigate();
   const { namaKategori } = form;
 
   const handleOnChange = (e) => {
@@ -16,17 +20,21 @@ function AddKategori() {
     });
   };
 
-  const handleOnSubmit = (e) => {
+  const handleOnSubmit = async (e) => {
     try {
       e.preventDefault();
       const body = {
-        namaKategori,
+        name: namaKategori,
+      };
+      const headers = {
+        headers: { Authorization: `Bearer ${Token}` },
       };
       console.log(body);
-      alert("pesan berhasil dikirim");
+      await API.post("/admin/categories", body, headers);
+      alert("Berhasil menambahkan categori");
       navigate("/kategori");
     } catch (error) {
-      alert("pesan tidak berhasil dikirim");
+      alert("Tidak berhasil menambahkan categori");
       console.log(error);
     }
   };

@@ -21,7 +21,6 @@ const Agen = () => {
       const response = await axios.get(API, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      console.log(response);
       setData(response.data.data);
     } catch (error) {
       console.log(error);
@@ -31,8 +30,6 @@ const Agen = () => {
   useEffect(() => {
     getData();
   }, []);
-
-  console.log(data);
 
   return (
     <>

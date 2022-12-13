@@ -4,7 +4,7 @@ export const MenuSidebar = [
   {
     id: 1,
     title: "Beranda",
-    link: "/beranda",
+    link: "/",
     icon: <FaIcons.FaThLarge />,
   },
   {

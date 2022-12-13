@@ -1,13 +1,23 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import * as FaIcons from "react-icons/fa";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import logosidebar from "../../assets/img/logosidebar.svg";
+import AuthContext from "../../context/AuthProvider";
 import { MenuSidebar } from "./dataSidebar";
 import "./sidebar.scss";
 
 const Sidebar = ({ children }) => {
+  const [state, dispatch] = useContext(AuthContext);
   const [click, setClick] = useState(false);
   const handleClick = () => setClick(!click);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch({
+      type: "LOGOUT",
+    });
+    navigate("/");
+  };
 
   return (
     <section className="sidebardashboard">
@@ -34,11 +44,11 @@ const Sidebar = ({ children }) => {
             <p>
               <FaIcons.FaUserCircle />
             </p>
-            <h1>Admin</h1>
+            <h1>{state.user.user.email ? "Admin" : state.user.user.email}</h1>
             <p>{click ? <FaIcons.FaAngleUp /> : <FaIcons.FaAngleDown />}</p>
           </div>
           {click ? (
-            <div className="roleactive">
+            <div className="roleactive" onClick={handleLogout}>
               <p>
                 <FaIcons.FaSignOutAlt />
               </p>

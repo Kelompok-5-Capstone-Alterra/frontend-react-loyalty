@@ -1,11 +1,11 @@
 import React from "react";
 
-function Beranda() {
+function Berkas() {
   return (
     <div>
-      <h1>Beranda</h1>
+      <h1>Berkas</h1>
     </div>
   );
 }
 
-export default Beranda;
+export default Berkas;
