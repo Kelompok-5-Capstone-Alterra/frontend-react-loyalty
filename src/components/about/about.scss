@@ -1,0 +1,42 @@
+@import "../../assets/styles/variable.scss";
+
+.about {
+  @include flex(row, space-between, flex-start, 2rem);
+  width: 100vw;
+  height: 100vh;
+  padding: 6%;
+  position: relative;
+  .backgroundphone {
+    position: absolute;
+    width: 1000px;
+    height: 700px;
+    left: 0;
+    z-index: -1;
+  }
+  .left {
+    @include flex(column, center, center, 0);
+    width: 70%;
+
+    .phone {
+      width: 300px;
+      height: 700px;
+    }
+  }
+  .right {
+    @include flex(column, flex-start, flex-start, 2rem);
+    width: 100%;
+    padding: 0 8rem 0 7rem;
+    h1 {
+      font-size: 3rem;
+      color: $blue300;
+    }
+    p {
+      font-size: 1rem;
+    }
+  }
+  .card {
+    padding: 2rem;
+    width: 100%;
+    background-color: $blue100;
+  }
+}
