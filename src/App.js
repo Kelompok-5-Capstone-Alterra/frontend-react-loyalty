@@ -7,14 +7,14 @@ import Kategori from "./pages//kategori/kategori";
 import AddKategori from "./pages/kategori/addKategori";
 import EditKategori from "./pages/kategori/editKategori";
 import Keuangan from "./pages/keuangan";
-import Koin from "./pages/koin";
+import Koin from "./pages/koin/koin";
 import LandingPage from "./pages/landingPage";
 import Pembayaran from "./pages/pembayaran";
 import AddProduk from "./pages/produk/addProduk";
 import EditProduk from "./pages/produk/editProduk";
 import Produk from "./pages/produk/produk";
 import Transaksi from "./pages/transaksi/transaksi";
-import Login from  "./pages/login";
+import Login from  "./pages/login/login";
 import Register from "./pages/register";
 
 

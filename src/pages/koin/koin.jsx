@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import * as FaIcons from "react-icons/fa";
 import axios from "axios";
-import "./transaksi.scss";
+import "./koin.scss";
 import Modal from "../../components/modal/modal";
 // import "@fortawesome/fontawesome-free/css/all.css";
 import "bootstrap/dist/css/bootstrap.css";
 
-const transaksi = () => {
+const koin = () => {
   const API = "https://jsonplaceholder.typicode.com/users";
   const [showModal, setShowModal] = useState(false);
   const [data, setData] = useState([]);
@@ -29,6 +29,7 @@ const transaksi = () => {
   }, []);
 
   console.log(data);
+  
 
   return (
     <>
@@ -55,7 +56,6 @@ const transaksi = () => {
           <div className="input">
             <input type="date" />
           </div>
-          <button type="submit" className="Export" id="export" />
         </div>
         <div className="bottom">
           <table>
@@ -124,4 +124,4 @@ const transaksi = () => {
   );
 };
 
-export default transaksi;
+export default koin;

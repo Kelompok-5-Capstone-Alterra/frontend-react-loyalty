@@ -110,7 +110,7 @@ const beranda = () => {
       </div>
 
       <div className="section col-sm-12 p-3">
-        <div class="card">
+        <div class="card p-5">
           <div>
             <select>
               <option hidden>Jumlah Pemasukan</option>
