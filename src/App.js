@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import Sidebar from "./components/sidebar/sidebar";
 import AuthContext from "./context/AuthProvider";
@@ -14,14 +14,46 @@ import LandingPage from "./pages/landingPage";
 import Login from "./pages/login/login";
 import Pembayaran from "./pages/pembayaran";
 import AddProduk from "./pages/produk/addProduk";
-import EditProduk from "./pages/produk/editProduk";
+import EditProduk from "./pages/produk/editReward";
 import Produk from "./pages/produk/produk";
 import Transaksi from "./pages/transaksi";
 import PrivateRoute from "./context/PrivateRoute";
+import Reward from "./pages/produk/reward";
+import AddReward from "./pages/produk/addReward";
+import EditReward from "./pages/produk/editReward";
 
 function App() {
-  const [state] = useContext(AuthContext);
+  const [state, dispatch] = useContext(AuthContext);
 
+  const Token = localStorage.token;
+  console.log(Token);
+
+  const checkUser = async () => {
+    const data = {
+      token: Token,
+    };
+    try {
+      if (localStorage.token === undefined) {
+        return dispatch({
+          type: "AUTH_ERROR",
+        });
+      } else {
+        dispatch({
+          type: "USER_SUCCESS",
+          payload: data,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    checkUser();
+  }, []);
+
+  // console.log(localStorage.token);
+  console.log(state);
   return (
     <>
       {state.isLogin ? (
@@ -32,8 +64,11 @@ function App() {
             <Route path="transaksi" element={<Transaksi />} />
             <Route path="koin" element={<Koin />} />
             <Route path="produk" element={<Produk />} />
+            <Route path="produk/reward" element={<Reward />} />
             <Route path="produk/add-produk" element={<AddProduk />} />
+            <Route path="produk/add-reward" element={<AddReward />} />
             <Route path="produk/edit-produk/:id" element={<EditProduk />} />
+            <Route path="produk/edit-reward/:id" element={<EditReward />} />
             <Route path="kategori" element={<Kategori />} />
             <Route path="kategori/add-kategori" element={<AddKategori />} />
             <Route

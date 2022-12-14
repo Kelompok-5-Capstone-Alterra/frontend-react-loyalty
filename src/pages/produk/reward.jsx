@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { API } from "../../auth";
 import AuthContext from "../../context/AuthProvider";
 
-const Produk = () => {
+const Reward = () => {
   const [state] = useContext(AuthContext);
   const [showModal, setShowModal] = useState(false);
   const [idDelete, setIdDelete] = useState("");
@@ -53,7 +53,7 @@ const Produk = () => {
     getCategori();
   }, []);
 
-  console.log(data);
+  console.log(categori);
 
   return (
     <>
@@ -69,26 +69,12 @@ const Produk = () => {
           </div>
         </div>
       </Modal>
-      <section className="produkSection">
+      <section className="rewardSection">
         <div className="very_top">
-          <div className="title">
-            <h1>Produk</h1>
-            <p>Semua produk pulsa & paket data</p>
-          </div>
-          <div className="button">
-            <button
-              onClick={() => navigate("/produk/reward")}
-              className="button_kotak"
-            >
-              Reward Koin Transaksi
-            </button>
-            <button
-              onClick={() => navigate("/produk/add-produk")}
-              className="button_circle"
-            >
-              <FaIcons.FaPlus />
-            </button>
-          </div>
+          <p onClick={() => navigate("/produk")}>
+            <FaIcons.FaArrowLeft />
+          </p>
+          <h1>Reward Koin Transaksi</h1>
         </div>
         <div className="top">
           <div className="input">
@@ -110,17 +96,18 @@ const Produk = () => {
                 <option> </option>
               )}
             </select>
+            <button onClick={() => navigate("/produk/add-reward")}>
+              <FaIcons.FaPlus />
+            </button>
           </div>
         </div>
         <div className="bottom">
           <table>
             <thead>
-              <th>Judul</th>
-              <th>Deskripsi</th>
-              <th>Provider</th>
-              <th>Masa Aktif (hari)</th>
+              <th>Produk</th>
               <th>Kategori</th>
-              <th>Harga (Rp)</th>
+              <th>Minimal Transaksi</th>
+              <th>Koin Transaksi</th>
               <th>Opsi</th>
             </thead>
             {data.map((item, index) => {
@@ -129,8 +116,6 @@ const Produk = () => {
               return (
                 <tbody key={index}>
                   <td>{item.name}</td>
-                  <td>{item.name}</td>
-                  <td>{item.name}</td>
                   <td>{obj?.name ? obj?.name : " "}</td>
                   <td>{item.minimum_transaction}</td>
                   <td>{item.points}</td>
@@ -138,7 +123,7 @@ const Produk = () => {
                     <div>
                       <button
                         onClick={() =>
-                          navigate(`/produk/edit-produk/${item.id}`)
+                          navigate(`/produk/edit-reward/${item.id}`)
                         }
                       >
                         <FaIcons.FaEdit />
@@ -158,4 +143,4 @@ const Produk = () => {
   );
 };
 
-export default Produk;
+export default Reward;

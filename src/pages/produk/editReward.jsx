@@ -1,41 +1,42 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import * as FaIcons from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { API } from "../../auth";
+import AuthContext from "../../context/AuthProvider";
 
-function AddProduk() {
+function EditReward() {
+  const [state] = useContext(AuthContext);
   const navigate = useNavigate();
-  const [token, setToken] = useState([]);
-  const [messageProduct, setMessageProduct] = useState(null);
-  const [messageTransaksi, setMessageTransaksi] = useState(null);
-  const [messageKoin, setMessageKoin] = useState(null);
-  const [data, setData] = useState([]);
+  const { id } = useParams();
   const [form, setForm] = useState({
     produk: "",
     kategori: "",
     transaksi: "",
     koin: "",
   });
+
   const { produk, kategori, transaksi, koin } = form;
+  const Token = state.user.token;
 
   const getData = async () => {
     try {
-      const response = await API.get("/categories");
-      setData(response.data.data);
+      const response = await API.get(`/products/${id}`);
+      console.log(response.data.data);
+      setForm({
+        produk: response.data.data.name,
+        kategori: response.data.data.category_id.name,
+        transaksi: response.data.data.minimum_transaction,
+        koin: response.data.data.points,
+      });
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("Bearer");
-    if (token) {
-      setToken(token);
-    }
     getData();
   }, []);
 
-  // console.log(token);
   const handleOnChange = (e) => {
     setForm({
       ...form,
@@ -46,29 +47,21 @@ function AddProduk() {
   const handleOnSubmit = async (e) => {
     try {
       e.preventDefault();
-
-      if (produk === "") {
-        setMessageProduct("silahkan isi nama product");
-      }
-      if (transaksi === "") {
-        setMessageTransaksi("silahkan isi nama product");
-      }
-      if (koin === "") {
-        setMessageKoin("silahkan isi nama product");
-      }
       const body = {
         name: produk,
         category_id: parseInt(kategori),
         minimum_transaction: parseInt(transaksi),
         points: parseInt(koin),
       };
+      const headers = {
+        headers: { Authorization: `Bearer ${Token}` },
+      };
       console.log(body);
-      await API.post("/admin/products", body, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      alert("Product berhasil ditambahkan");
+      await API.put(`/admin/products/${id}`, body, headers);
+      alert("pesan berhasil dikirim");
       navigate("/produk");
     } catch (error) {
+      alert("pesan tidak berhasil dikirim");
       console.log(error);
     }
   };
@@ -79,59 +72,49 @@ function AddProduk() {
         <button onClick={() => navigate("/produk")}>
           <FaIcons.FaArrowLeft />
         </button>
-        <h1>Buat Produk Anda</h1>
+        <h1>Edit Reward Anda</h1>
       </div>
       <form className="bottom" onSubmit={(e) => handleOnSubmit(e)}>
         <div className="componentInput">
           <label>Produk</label>
           <input
             type="text"
-            placeholder="Tambahkan Nama Produk Anda..."
             value={produk}
             name="produk"
             onChange={handleOnChange}
           />
-          <p className="error_message">{messageProduct}</p>
         </div>
         <div className="componentInput">
           <label>Kategori</label>
           <select name="kategori" onChange={handleOnChange} value={kategori}>
-            <option hidden>Kategori Produk...</option>
-            {data.map((item, index) => (
-              <option key={index} value={item.id}>
-                {item.name}
-              </option>
-            ))}
+            <option>123</option>
+            <option>as1232132132d</option>
           </select>
         </div>
         <div className="componentInput">
           <label>Minimal Transaksi</label>
           <input
             type="text"
-            placeholder="Limit Nasabah Untuk Transaksi..."
             value={transaksi}
             name="transaksi"
             onChange={handleOnChange}
           />
-          <p className="error_message">{messageTransaksi}</p>
         </div>
         <div className="componentInput">
           <label>Koin Transaksi</label>
           <input
             type="text"
-            placeholder="Tetapkan Nilai Koin Untuk Setiap Pelanggan Yang Melakukan Transaksi..."
             value={koin}
             name="koin"
             onChange={handleOnChange}
           />
-          <p className="error_message">{messageKoin}</p>
         </div>
         <div className="rowButton">
-          <button>Buat</button>
+          <button>Simpan</button>
         </div>
       </form>
     </section>
   );
 }
 
-export default AddProduk;
+export default EditReward;

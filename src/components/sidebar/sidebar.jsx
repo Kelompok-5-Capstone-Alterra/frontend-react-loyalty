@@ -18,6 +18,7 @@ const Sidebar = ({ children }) => {
     });
     navigate("/");
   };
+  console.log(state);
 
   return (
     <section className="sidebardashboard">
@@ -44,7 +45,7 @@ const Sidebar = ({ children }) => {
             <p>
               <FaIcons.FaUserCircle />
             </p>
-            <h1>{state.user.user.email ? "Admin" : state.user.user.email}</h1>
+            <h1>Admin</h1>
             <p>{click ? <FaIcons.FaAngleUp /> : <FaIcons.FaAngleDown />}</p>
           </div>
           {click ? (

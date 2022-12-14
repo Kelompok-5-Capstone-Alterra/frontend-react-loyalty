@@ -4,10 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { API } from "../../auth";
 import AuthContext from "../../context/AuthProvider";
 
-function AddProduk() {
+function AddReward() {
   const [state] = useContext(AuthContext);
   const navigate = useNavigate();
   const [messageProduct, setMessageProduct] = useState(null);
+  const [messageTransaksi, setMessageTransaksi] = useState(null);
+  const [messageKoin, setMessageKoin] = useState(null);
   const [data, setData] = useState([]);
   const [form, setForm] = useState({
     produk: "",
@@ -46,6 +48,12 @@ function AddProduk() {
       if (produk === "") {
         setMessageProduct("silahkan isi nama product");
       }
+      if (transaksi === "") {
+        setMessageTransaksi("silahkan isi nama product");
+      }
+      if (koin === "") {
+        setMessageKoin("silahkan isi nama product");
+      }
       const body = {
         name: produk,
         category_id: parseInt(kategori),
@@ -66,14 +74,14 @@ function AddProduk() {
   return (
     <section className="addProdukSection">
       <div className="top">
-        <button onClick={() => navigate("/produk")}>
+        <button onClick={() => navigate("/produk/reward")}>
           <FaIcons.FaArrowLeft />
         </button>
-        <h1>Buat Produk Anda</h1>
+        <h1>Buat Reward Anda</h1>
       </div>
       <form className="bottom" onSubmit={(e) => handleOnSubmit(e)}>
         <div className="componentInput">
-          <label>Judul</label>
+          <label>Produk</label>
           <input
             type="text"
             placeholder="Tambahkan Nama Produk Anda..."
@@ -84,47 +92,7 @@ function AddProduk() {
           <p className="error_message">{messageProduct}</p>
         </div>
         <div className="componentInput">
-          <label>Deskripsi</label>
-          <textarea placeholder="Deskripsi........." />
-          <p className="error_message">{messageProduct}</p>
-        </div>
-        <div className="componentInput">
-          <label>Provider</label>
-          <input
-            type="text"
-            placeholder="Provider"
-            value={produk}
-            name="produk"
-            onChange={handleOnChange}
-          />
-          <p className="error_message">{messageProduct}</p>
-        </div>
-        <div className="input_row">
-          <div className="componentInput">
-            <label>Masa Aktif (Hari)</label>
-            <input
-              type="text"
-              placeholder="Masa Aktif (Hari)"
-              value={produk}
-              name="produk"
-              onChange={handleOnChange}
-            />
-            <p className="error_message">{messageProduct}</p>
-          </div>
-          <div className="componentInput">
-            <label>Harga (Rp)</label>
-            <input
-              type="text"
-              placeholder="Harga (Rp)"
-              value={produk}
-              name="produk"
-              onChange={handleOnChange}
-            />
-            <p className="error_message">{messageProduct}</p>
-          </div>
-        </div>
-        <div className="componentInput">
-          <label>Judul</label>
+          <label>Kategori</label>
           <select name="kategori" onChange={handleOnChange} value={kategori}>
             <option hidden>Kategori Produk...</option>
             {data.map((item, index) => (
@@ -134,29 +102,27 @@ function AddProduk() {
             ))}
           </select>
         </div>
-        <div className="input_row">
-          <div className="componentInput">
-            <label>Mininal Transaksi</label>
-            <input
-              type="text"
-              placeholder="Mininal Transaksi"
-              value={produk}
-              name="produk"
-              onChange={handleOnChange}
-            />
-            <p className="error_message">{messageProduct}</p>
-          </div>
-          <div className="componentInput">
-            <label>Koin Transaksi</label>
-            <input
-              type="text"
-              placeholder="Koin Transaksi"
-              value={produk}
-              name="produk"
-              onChange={handleOnChange}
-            />
-            <p className="error_message">{messageProduct}</p>
-          </div>
+        <div className="componentInput">
+          <label>Minimal Transaksi</label>
+          <input
+            type="text"
+            placeholder="Limit Nasabah Untuk Transaksi..."
+            value={transaksi}
+            name="transaksi"
+            onChange={handleOnChange}
+          />
+          <p className="error_message">{messageTransaksi}</p>
+        </div>
+        <div className="componentInput">
+          <label>Koin Transaksi</label>
+          <input
+            type="text"
+            placeholder="Tetapkan Nilai Koin Untuk Setiap Pelanggan Yang Melakukan Transaksi..."
+            value={koin}
+            name="koin"
+            onChange={handleOnChange}
+          />
+          <p className="error_message">{messageKoin}</p>
         </div>
         <div className="rowButton">
           <button>Buat</button>
@@ -166,4 +132,4 @@ function AddProduk() {
   );
 }
 
-export default AddProduk;
+export default AddReward;

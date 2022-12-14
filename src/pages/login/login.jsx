@@ -5,7 +5,8 @@ import "./login.scss";
 import backgroundlogin from "../../assets/img/backgroundlogin.svg";
 import logologin from "../../assets/img/logologin.svg";
 import AuthContext from "../../context/AuthProvider";
-import * as FaIcons from "react-icons/fa";
+import * as MdIcons from "react-icons/md";
+import * as GrIcons from "react-icons/gr";
 
 const LOGIN_URL = "/auth/signin";
 
@@ -74,33 +75,37 @@ const Login = () => {
               <form onSubmit={handleSubmitLogin}>
                 <div className="input">
                   <p>
-                    <FaIcons.FaUser />
+                    <GrIcons.GrUser />
                   </p>
-                  <input type="text" placeholder="Masukan username anda" />
+                  <input type="text" placeholder="masukan username anda" />
                 </div>
                 <div className="input">
                   <p>
-                    <FaIcons.FaEnvelope />
+                    <MdIcons.MdEmail />
                   </p>
-                  <input type="text" placeholder="Masukan email anda" />
+                  <input type="text" placeholder="masukan email anda" />
                 </div>
                 <div className="input">
                   <p>
-                    <FaIcons.FaLock />
+                    <MdIcons.MdLock />
                   </p>
                   <input
                     type={showPass ? "text" : "password"}
-                    placeholder="Masukan password anda"
+                    placeholder="masukan password anda"
                   />
                   <p onClick={handleShow}>
-                    {showPass ? <FaIcons.FaEyeSlash /> : <FaIcons.FaEye />}
+                    {showPass ? (
+                      <GrIcons.GrFormViewHide />
+                    ) : (
+                      <GrIcons.GrFormView />
+                    )}
                   </p>
                 </div>
                 <div className="input">
                   <p>
-                    <FaIcons.FaPhoneAlt />
+                    <GrIcons.GrPhone />
                   </p>
-                  <input type="text" placeholder="Masukan No.Hp anda" />
+                  <input type="text" placeholder="masukan No.Hp anda" />
                 </div>
                 <button>Daftar</button>
               </form>
@@ -111,11 +116,11 @@ const Login = () => {
               <form onSubmit={handleSubmitLogin}>
                 <div className="input">
                   <p>
-                    <FaIcons.FaEnvelope />
+                    <MdIcons.MdEmail />
                   </p>
                   <input
                     type="text"
-                    placeholder="Masukan email anda"
+                    placeholder="masukan email anda"
                     value={email}
                     name="email"
                     onChange={handleOnChange}
@@ -123,17 +128,21 @@ const Login = () => {
                 </div>
                 <div className="input">
                   <p>
-                    <FaIcons.FaLock />
+                    <MdIcons.MdLock />
                   </p>
                   <input
                     type={showPass ? "text" : "password"}
-                    placeholder="Masukan password anda"
+                    placeholder="masukan password anda"
                     value={password}
                     name="password"
                     onChange={handleOnChange}
                   />
                   <p onClick={handleShow}>
-                    {showPass ? <FaIcons.FaEyeSlash /> : <FaIcons.FaEye />}
+                    {showPass ? (
+                      <GrIcons.GrFormViewHide />
+                    ) : (
+                      <GrIcons.GrFormView />
+                    )}
                   </p>
                 </div>
                 <p className="error">{errMsg}</p>

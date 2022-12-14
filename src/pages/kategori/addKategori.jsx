@@ -20,6 +20,8 @@ function AddKategori() {
     });
   };
 
+  console.log(Token);
+
   const handleOnSubmit = async (e) => {
     try {
       e.preventDefault();

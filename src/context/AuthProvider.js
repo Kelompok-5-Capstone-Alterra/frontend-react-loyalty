@@ -9,9 +9,14 @@ const initialState = {
 
 const reducer = (state, action) => {
   const { type, payload } = action;
+  console.log(type);
 
   switch (type) {
     case "USER_SUCCESS":
+      return {
+        isLogin: true,
+        user: payload,
+      };
     case "LOGIN SUCCESS":
       localStorage.setItem("token", payload.token);
       return {
