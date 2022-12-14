@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // import { useRef, useState, useEffect } from "react";
 // import useAuth from "../hooks/useAuth";
 // import { Link, useNavigate, useLocation } from "react-router-dom";
@@ -8,6 +9,8 @@
 
 // const Login = () => {
 //   const { setAuth } = useAuth();
+=======
+>>>>>>> a51c67031602486c28a22331b5900696bc7b7125
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { API } from "../../api/axios";
