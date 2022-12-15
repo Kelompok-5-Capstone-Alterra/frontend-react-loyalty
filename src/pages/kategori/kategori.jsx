@@ -1,25 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import * as FaIcons from "react-icons/fa";
 import "./kategori.scss";
 import Modal from "../../components/modal/modal";
 import { useNavigate } from "react-router-dom";
 import { API } from "../../auth";
+import AuthContext from "../../context/AuthProvider";
 
 const Kategori = () => {
+  const [state] = useContext(AuthContext);
   const [showModal, setShowModal] = useState(false);
   const [data, setData] = useState([]);
-  const [token, setToken] = useState([]);
   const [idDelete, setIdDelete] = useState("");
+  const Token = state.user.token;
   const navigate = useNavigate();
   const ClickModal = (id) => {
     setShowModal((prev) => !prev);
     setIdDelete(id);
   };
 
+  console.log(idDelete);
+
   const handleDelete = async () => {
     try {
-      await API.delete(` /admin/categories/${idDelete}`, {
-        headers: { Authorization: `Bearer ${token}` },
+      await API.delete(`/categories/${idDelete}`, {
+        headers: { Authorization: `Bearer ${Token}` },
       });
       setShowModal((prev) => !prev);
     } catch (error) {
@@ -37,10 +41,6 @@ const Kategori = () => {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("Bearer");
-    if (token) {
-      setToken(token);
-    }
     getData();
   }, []);
 
@@ -53,7 +53,7 @@ const Kategori = () => {
           </p>
           <h1>Apakah anda yakin ingin menghapus kategori?</h1>
           <div>
-            <button onClick={handleDelete}>Yakin</button>
+            <button onClick={() => handleDelete()}>Yakin</button>
             <button onClick={() => setShowModal(false)}>Batal</button>
           </div>
         </div>

@@ -7,11 +7,11 @@ import AuthContext from "../../context/AuthProvider";
 function AddKategori() {
   const [state] = useContext(AuthContext);
   const [form, setForm] = useState({
-    namaKategori: "",
+    name: "",
   });
   const Token = state.user.token;
   const navigate = useNavigate();
-  const { namaKategori } = form;
+  const { name } = form;
 
   const handleOnChange = (e) => {
     setForm({
@@ -26,17 +26,17 @@ function AddKategori() {
     try {
       e.preventDefault();
       const body = {
-        name: namaKategori,
+        name: name,
       };
       const headers = {
         headers: { Authorization: `Bearer ${Token}` },
       };
       console.log(body);
-      await API.post("/admin/categories", body, headers);
-      alert("Berhasil menambahkan categori");
+      await API.post("/categories", body, headers);
+      alert("Berhasil menambahkan kategori");
       navigate("/kategori");
     } catch (error) {
-      alert("Tidak berhasil menambahkan categori");
+      alert("Tidak berhasil menambahkan kategori");
       console.log(error);
     }
   };
@@ -55,8 +55,8 @@ function AddKategori() {
           <input
             type="text"
             placeholder="Kategori Produk..."
-            value={namaKategori}
-            name="namaKategori"
+            value={name}
+            name="name"
             onChange={handleOnChange}
           />
         </div>

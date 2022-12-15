@@ -18,6 +18,18 @@ const Reward = () => {
     setShowModal((prev) => !prev);
     setIdDelete(id);
   };
+  const [form, setForm] = useState({
+    category: "",
+  });
+
+  const { category } = form;
+
+  const handleOnChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const handleDelete = async () => {
     try {
@@ -32,7 +44,7 @@ const Reward = () => {
 
   const getData = async () => {
     try {
-      const response = await API.get("/rewards");
+      const response = await API.get("/products");
       setData(response?.data?.data);
     } catch (error) {
       console.log(error);
@@ -53,7 +65,7 @@ const Reward = () => {
     getCategori();
   }, []);
 
-  console.log(data);
+  console.log(category);
 
   return (
     <>
@@ -84,7 +96,12 @@ const Reward = () => {
             <input type="search" id="search" placeholder="Search..." />
           </div>
           <div className="topRight">
-            <select className="input">
+            <select
+              className="input"
+              name="category"
+              onChange={handleOnChange}
+              value={category}
+            >
               <option hidden>Produk</option>
               {categori ? (
                 <>
@@ -112,26 +129,55 @@ const Reward = () => {
             </thead>
             {data.map((item, index) => {
               return (
-                <tbody key={index}>
-                  <td>{item.name}</td>
-                  <td>{item.category}</td>
-                  <td>{item.required_point}</td>
-                  <td>{item.required_point}</td>
-                  <td>
-                    <div>
-                      <button
-                        onClick={() =>
-                          navigate(`/produk/edit-reward/${item.id}`)
-                        }
-                      >
-                        <FaIcons.FaEdit />
-                      </button>
-                      <button onClick={() => ClickModal(item.id)}>
-                        <FaIcons.FaTrash />
-                      </button>
-                    </div>
-                  </td>
-                </tbody>
+                <>
+                  {category === "" ? (
+                    <tbody key={index}>
+                      <td>{item.name}</td>
+                      <td>{item.category.name}</td>
+                      <td>{item.minimum_transaction}</td>
+                      <td>{item.coins}</td>
+                      <td>
+                        <div>
+                          <button
+                            onClick={() =>
+                              navigate(`/produk/edit-produk/${item.id}`)
+                            }
+                          >
+                            <FaIcons.FaEdit />
+                          </button>
+                          <button onClick={() => ClickModal(item.id)}>
+                            <FaIcons.FaTrash />
+                          </button>
+                        </div>
+                      </td>
+                    </tbody>
+                  ) : (
+                    <>
+                      {item.category.name === category ? (
+                        <tbody key={index}>
+                          <td>{item.name}</td>
+                          <td>{item.category.name}</td>
+                          <td>{item.minimum_transaction}</td>
+                          <td>{item.coins}</td>
+                          <td>
+                            <div>
+                              <button
+                                onClick={() =>
+                                  navigate(`/produk/edit-produk/${item.id}`)
+                                }
+                              >
+                                <FaIcons.FaEdit />
+                              </button>
+                              <button onClick={() => ClickModal(item.id)}>
+                                <FaIcons.FaTrash />
+                              </button>
+                            </div>
+                          </td>
+                        </tbody>
+                      ) : null}
+                    </>
+                  )}
+                </>
               );
             })}
           </table>

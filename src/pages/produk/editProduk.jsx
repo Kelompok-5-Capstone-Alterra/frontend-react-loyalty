@@ -1,26 +1,56 @@
 import React, { useContext, useEffect, useState } from "react";
 import * as FaIcons from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { API } from "../../auth";
 import AuthContext from "../../context/AuthProvider";
 
 function EditProduk() {
   const [state] = useContext(AuthContext);
   const navigate = useNavigate();
-  const [messageProduct, setMessageProduct] = useState(null);
-  const [messageTransaksi, setMessageTransaksi] = useState(null);
-  const [messageKoin, setMessageKoin] = useState(null);
   const [data, setData] = useState([]);
+  const { id } = useParams();
   const [form, setForm] = useState({
-    produk: "",
-    kategori: "",
-    transaksi: "",
-    koin: "",
+    name: "",
+    description: "",
+    provider: "",
+    active_period: "",
+    price: "",
+    minimum_transaction: "",
+    coins: "",
+    category_id: "",
   });
   const Token = state.user.token;
-  const { produk, kategori, transaksi, koin } = form;
+  const {
+    name,
+    description,
+    provider,
+    active_period,
+    price,
+    minimum_transaction,
+    coins,
+    category_id,
+  } = form;
 
   const getData = async () => {
+    try {
+      const response = await API.get(`/products/${id}`);
+      console.log(response.data.data);
+      setForm({
+        name: response.data.data.name,
+        description: response.data.data.description,
+        provider: response.data.data.provider,
+        active_period: response.data.data.active_period,
+        price: response.data.data.price,
+        minimum_transaction: response.data.data.minimum_transaction,
+        coins: response.data.data.coins,
+        category_id: response.data.data.category_id,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getCategori = async () => {
     try {
       const response = await API.get("/categories");
       setData(response.data.data);
@@ -31,6 +61,7 @@ function EditProduk() {
 
   useEffect(() => {
     getData();
+    getCategori();
   }, []);
 
   // console.log(token);
@@ -45,28 +76,29 @@ function EditProduk() {
     try {
       e.preventDefault();
 
-      if (produk === "") {
-        setMessageProduct("silahkan isi nama product");
-      }
-      if (transaksi === "") {
-        setMessageTransaksi("silahkan isi nama product");
-      }
-      if (koin === "") {
-        setMessageKoin("silahkan isi nama product");
-      }
+      // if (produk === "") {
+      //   setMessageProduct("silahkan isi nama product");
+      // }
+
       const body = {
-        name: produk,
-        category_id: parseInt(kategori),
-        minimum_transaction: parseInt(transaksi),
-        points: parseInt(koin),
+        name: name,
+        description: description,
+        provider: provider,
+        active_period: parseInt(active_period),
+        price: parseInt(price),
+        minimum_transaction: parseInt(minimum_transaction),
+        coins: parseInt(coins),
+        category_id: parseInt(category_id),
       };
       const headers = {
         headers: { Authorization: `Bearer ${Token}` },
       };
-      await API.post("/admin/products", body, headers);
-      alert("Product berhasil ditambahkan");
+      console.log(body);
+      await API.put(`/admin/products/${id}`, body, headers);
+      alert("Berhasil mengedit produk");
       navigate("/produk");
     } catch (error) {
+      alert("Tidak berhasil mengedit produk");
       console.log(error);
     }
   };
@@ -85,55 +117,59 @@ function EditProduk() {
           <input
             type="text"
             placeholder="Tambahkan Nama Produk Anda..."
-            value={produk}
-            name="produk"
+            value={name}
+            name="name"
             onChange={handleOnChange}
           />
-          <p className="error_message">{messageProduct}</p>
         </div>
         <div className="componentInput">
           <label>Deskripsi</label>
-          <textarea placeholder="Deskripsi........." />
-          <p className="error_message">{messageProduct}</p>
+          <textarea
+            placeholder="Deskripsi........."
+            name="description"
+            value={description}
+            onChange={handleOnChange}
+          />
         </div>
         <div className="componentInput">
           <label>Provider</label>
           <input
             type="text"
             placeholder="Provider"
-            value={produk}
-            name="produk"
+            value={provider}
+            name="provider"
             onChange={handleOnChange}
           />
-          <p className="error_message">{messageProduct}</p>
         </div>
         <div className="input_row">
           <div className="componentInput">
             <label>Masa Aktif (Hari)</label>
             <input
-              type="text"
+              type="number"
               placeholder="Masa Aktif (Hari)"
-              value={produk}
-              name="produk"
+              value={active_period}
+              name="active_period"
               onChange={handleOnChange}
             />
-            <p className="error_message">{messageProduct}</p>
           </div>
           <div className="componentInput">
             <label>Harga (Rp)</label>
             <input
-              type="text"
+              type="number"
               placeholder="Harga (Rp)"
-              value={produk}
-              name="produk"
+              value={price}
+              name="price"
               onChange={handleOnChange}
             />
-            <p className="error_message">{messageProduct}</p>
           </div>
         </div>
         <div className="componentInput">
-          <label>Judul</label>
-          <select name="kategori" onChange={handleOnChange} value={kategori}>
+          <label>Kategori</label>
+          <select
+            name="category_id"
+            onChange={handleOnChange}
+            value={category_id}
+          >
             <option hidden>Kategori Produk...</option>
             {data.map((item, index) => (
               <option key={index} value={item.id}>
@@ -147,27 +183,25 @@ function EditProduk() {
             <label>Minimal Transaksi</label>
             <input
               type="text"
-              placeholder="Mininal Transaksi"
-              value={produk}
-              name="produk"
+              placeholder="Minimal Transaksi"
+              value={minimum_transaction}
+              name="minimum_transaction"
               onChange={handleOnChange}
             />
-            <p className="error_message">{messageProduct}</p>
           </div>
           <div className="componentInput">
             <label>Koin Transaksi</label>
             <input
               type="text"
               placeholder="Koin Transaksi"
-              value={produk}
-              name="produk"
+              value={coins}
+              name="coins"
               onChange={handleOnChange}
             />
-            <p className="error_message">{messageProduct}</p>
           </div>
         </div>
         <div className="rowButton">
-          <button>Buat</button>
+          <button>Simpan</button>
         </div>
       </form>
     </section>

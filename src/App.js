@@ -14,13 +14,11 @@ import LandingPage from "./pages/landingPage";
 import Login from "./pages/login/login";
 import Pembayaran from "./pages/pembayaran";
 import AddProduk from "./pages/produk/addProduk";
-import EditProduk from "./pages/produk/editReward";
+import EditProduk from "./pages/produk/editProduk";
 import Produk from "./pages/produk/produk";
 import Transaksi from "./pages/transaksi";
 import PrivateRoute from "./context/PrivateRoute";
 import Reward from "./pages/produk/reward";
-import AddReward from "./pages/produk/addReward";
-import EditReward from "./pages/produk/editReward";
 
 function App() {
   const [state, dispatch] = useContext(AuthContext);
@@ -66,9 +64,7 @@ function App() {
             <Route path="produk" element={<Produk />} />
             <Route path="produk/reward" element={<Reward />} />
             <Route path="produk/add-produk" element={<AddProduk />} />
-            <Route path="produk/add-reward" element={<AddReward />} />
             <Route path="produk/edit-produk/:id" element={<EditProduk />} />
-            <Route path="produk/edit-reward/:id" element={<EditReward />} />
             <Route path="kategori" element={<Kategori />} />
             <Route path="kategori/add-kategori" element={<AddKategori />} />
             <Route
