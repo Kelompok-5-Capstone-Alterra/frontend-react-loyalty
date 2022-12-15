@@ -124,16 +124,14 @@ const Produk = () => {
               <th>Opsi</th>
             </thead>
             {data.map((item, index) => {
-              const categori_ = categori ? categori : [];
-              const obj = categori_?.find((t) => t?.id === item?.category_id);
               return (
                 <tbody key={index}>
                   <td>{item.name}</td>
-                  <td>{item.name}</td>
-                  <td>{item.name}</td>
-                  <td>{obj?.name ? obj?.name : " "}</td>
-                  <td>{item.minimum_transaction}</td>
-                  <td>{item.points}</td>
+                  <td>{item.description}</td>
+                  <td>{item.provider}</td>
+                  <td>{item.active_period}</td>
+                  <td>{item.category.name}</td>
+                  <td>{item.price}</td>
                   <td>
                     <div>
                       <button

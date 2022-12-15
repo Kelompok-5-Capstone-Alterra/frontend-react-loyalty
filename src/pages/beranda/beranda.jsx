@@ -11,10 +11,7 @@ import {
 import "./beranda.scss";
 import { Box } from "@mui/material";
 import StatBox from "./StatBox";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
-import FolderIcon from "@mui/icons-material/FolderCopyOutlined";
-import * as ImIcons from "react-icons/im";
+import * as FaIcons from "react-icons/fa";
 
 const data = [
   { label: "Jan", income: 20, expense: 35 },
@@ -61,7 +58,7 @@ const beranda = () => {
                 }}
               >
                 <span>
-                  <ImIcons.ImStatsDots />
+                  <FaIcons.FaChartLine />
                 </span>
                 Laporan bisnis
               </p>
@@ -86,7 +83,8 @@ const beranda = () => {
                   subtitle="Total pendapatan di bulan ini"
                   increase="25%"
                   icon={
-                    <FolderIcon sx={{ color: "#242424", fontSize: "26px" }} />
+                    // <FolderIcon sx={{ color: "#242424", fontSize: "26px" }} />
+                    <FaIcons.FaMoneyCheck style={{ fontSize: "26px" }} />
                   }
                 />
               </Box>
@@ -103,9 +101,10 @@ const beranda = () => {
                   increase="12%"
                   title="Rp10.556.785"
                   icon={
-                    <PointOfSaleIcon
-                      sx={{ color: "#242424", fontSize: "26px" }}
-                    />
+                    // <PointOfSaleIcon
+                    //   sx={{ color: "#242424", fontSize: "26px" }}
+                    // />
+                    <FaIcons.FaMoneyCheckAlt style={{ fontSize: "26px" }} />
                   }
                 />
               </Box>
@@ -122,9 +121,10 @@ const beranda = () => {
                   increase="5%"
                   title="1250"
                   icon={
-                    <PersonAddIcon
-                      sx={{ color: "#242424", fontSize: "26px" }}
-                    />
+                    // <PersonAddIcon
+                    //   sx={{ color: "#242424", fontSize: "26px" }}
+                    // />
+                    <FaIcons.FaUsers style={{ fontSize: "26px" }} />
                   }
                 />
               </Box>
@@ -141,7 +141,7 @@ const beranda = () => {
               <option>Rata-Rata Transaksi</option>
               <option>Jumlah Agen</option>
             </select>
-            <h5 className="beranda_title">Desember 2022</h5>
+            <h5 className="beranda_title">Bulanan 2022</h5>
           </div>
 
           <div className="section-content">

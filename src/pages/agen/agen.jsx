@@ -80,8 +80,8 @@ const Agen = () => {
                 <td>{item.email}</td>
                 <td>{dateFormat(item.created_at)}</td>
                 <td>{item.mobile_number}</td>
-                <td>123</td>
-                <td>123</td>
+                <td>{item.user_coin.amount}</td>
+                <td>{item.credit.amount}</td>
                 <td>
                   <button onClick={ClickModal}>
                     <FaIcons.FaTrash />

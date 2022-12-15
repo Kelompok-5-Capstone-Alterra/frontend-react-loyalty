@@ -32,7 +32,7 @@ const Reward = () => {
 
   const getData = async () => {
     try {
-      const response = await API.get("/products");
+      const response = await API.get("/rewards");
       setData(response?.data?.data);
     } catch (error) {
       console.log(error);
@@ -53,7 +53,7 @@ const Reward = () => {
     getCategori();
   }, []);
 
-  console.log(categori);
+  console.log(data);
 
   return (
     <>
@@ -111,14 +111,12 @@ const Reward = () => {
               <th>Opsi</th>
             </thead>
             {data.map((item, index) => {
-              const categori_ = categori ? categori : [];
-              const obj = categori_?.find((t) => t?.id === item?.category_id);
               return (
                 <tbody key={index}>
                   <td>{item.name}</td>
-                  <td>{obj?.name ? obj?.name : " "}</td>
-                  <td>{item.minimum_transaction}</td>
-                  <td>{item.points}</td>
+                  <td>{item.category}</td>
+                  <td>{item.required_point}</td>
+                  <td>{item.required_point}</td>
                   <td>
                     <div>
                       <button

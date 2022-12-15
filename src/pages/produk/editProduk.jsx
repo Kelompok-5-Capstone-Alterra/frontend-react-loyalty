@@ -144,7 +144,7 @@ function EditProduk() {
         </div>
         <div className="input_row">
           <div className="componentInput">
-            <label>Mininal Transaksi</label>
+            <label>Minimal Transaksi</label>
             <input
               type="text"
               placeholder="Mininal Transaksi"
