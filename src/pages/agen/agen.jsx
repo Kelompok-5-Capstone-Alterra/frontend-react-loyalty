@@ -6,7 +6,7 @@ import Modal from "../../components/modal/modal";
 import dateFormat from "dateformat";
 
 const Agen = () => {
-  const API = "http://goapi.kuroyamii.works/admin/users";
+  const API = "https://goapi.kuroyamii.works/admin/users";
   const token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVhdGVkX2F0IjoiMjAyMi0xMi0wOFQyMjozODo1NS41NjMyODU1NDIrMDg6MDAiLCJkYXRhIjp7Im5hbWUiOiJtdWhhbW1hZHNoZXZhcml6a3kiLCJlbWFpbCI6Im11aGFtbWFkc2hldmFyaXpreUBnbWFpbC5jb20iLCJtb2JpbGVfbnVtYmVyIjoiMDgxODA3ODc4ODQyIiwicm9sZSI6eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiY3JlYXRlZF9hdCI6IjIwMjItMTItMDJUMTY6MTk6MTgrMDg6MDAiLCJ1cGRhdGVkX2F0IjoiMjAyMi0xMi0wMlQxNjoxOToxOCswODowMCJ9fSwic3ViIjoiMjgxNTk0ZTktNmVhOC00ZDQ5LTljOGEtOTk3NTk2YmJhZTcwIn0.k2X2_AMv66KDnaa9be-T9ay2WWUY-b6rITpPdQS2StI";
   const [showModal, setShowModal] = useState(false);
