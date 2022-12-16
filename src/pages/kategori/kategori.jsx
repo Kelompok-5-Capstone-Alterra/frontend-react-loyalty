@@ -1,23 +1,40 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import * as FaIcons from "react-icons/fa";
-import axios from "axios";
 import "./kategori.scss";
 import Modal from "../../components/modal/modal";
 import { useNavigate } from "react-router-dom";
+import { API } from "../../auth";
+import AuthContext from "../../context/AuthProvider";
 
 const Kategori = () => {
-  const API = "https://jsonplaceholder.typicode.com/users";
+  const [state] = useContext(AuthContext);
   const [showModal, setShowModal] = useState(false);
   const [data, setData] = useState([]);
+  const [idDelete, setIdDelete] = useState("");
+  const Token = state.user.token;
   const navigate = useNavigate();
-  const ClickModal = () => {
+  const ClickModal = (id) => {
     setShowModal((prev) => !prev);
+    setIdDelete(id);
+  };
+
+  console.log(idDelete);
+
+  const handleDelete = async () => {
+    try {
+      await API.delete(`/categories/${idDelete}`, {
+        headers: { Authorization: `Bearer ${Token}` },
+      });
+      setShowModal((prev) => !prev);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const getData = async () => {
     try {
-      const response = await axios.get(API);
-      setData(response.data);
+      const response = await API.get("/categories");
+      setData(response.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -26,8 +43,6 @@ const Kategori = () => {
   useEffect(() => {
     getData();
   }, []);
-
-  console.log(data);
 
   return (
     <>
@@ -38,7 +53,7 @@ const Kategori = () => {
           </p>
           <h1>Apakah anda yakin ingin menghapus kategori?</h1>
           <div>
-            <button>Yakin</button>
+            <button onClick={() => handleDelete()}>Yakin</button>
             <button onClick={() => setShowModal(false)}>Batal</button>
           </div>
         </div>
@@ -68,10 +83,14 @@ const Kategori = () => {
                 <td>{item.name}</td>
                 <td>
                   <div>
-                    <button onClick={() => navigate("/kategori/edit-kategori")}>
+                    <button
+                      onClick={() =>
+                        navigate(`/kategori/edit-kategori/${item.id}`)
+                      }
+                    >
                       <FaIcons.FaEdit />
                     </button>
-                    <button onClick={ClickModal}>
+                    <button onClick={() => ClickModal(item.id)}>
                       <FaIcons.FaTrash />
                     </button>
                   </div>

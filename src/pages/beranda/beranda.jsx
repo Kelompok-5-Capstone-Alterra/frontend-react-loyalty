@@ -9,13 +9,9 @@ import {
   Legend,
 } from "recharts";
 import "./beranda.scss";
-import { Box, useTheme } from "@mui/material";
-import { tokens } from "../../theme";
-import TrafficIcon from "@mui/icons-material/Traffic";
-import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
-import StatBox from "../../components/StatBox";
-import FolderIcon from "@mui/icons-material/FolderCopyOutlined";
+import { Box } from "@mui/material";
+import StatBox from "./StatBox";
+import * as FaIcons from "react-icons/fa";
 
 const data = [
   { label: "Jan", income: 20, expense: 35 },
@@ -33,8 +29,8 @@ const data = [
 ];
 
 const beranda = () => {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
+  // const theme = useTheme();
+  // const colors = tokens(theme.palette.mode);
 
   return (
     <div className="row">
@@ -42,7 +38,31 @@ const beranda = () => {
         <div class="card">
           {/* <img src={grafik} alt="" /> */}
           {/* <h5>Laporan bisnis</h5> */}
-          <div class="box-container">
+          <div
+            class="box-container"
+            style={{
+              background: "#003060",
+              padding: "1rem",
+              borderRadius: "5px",
+            }}
+          >
+            <div>
+              <p
+                style={{
+                  color: "#ffffff",
+                  fontSize: "1.5rem",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "1rem",
+                  padding: "0 0 1rem 1rem",
+                }}
+              >
+                <span>
+                  <FaIcons.FaChartLine />
+                </span>
+                Laporan bisnis
+              </p>
+            </div>
             <Box
               display="grid"
               gridTemplateColumns="repeat(10, 1fr)"
@@ -52,25 +72,26 @@ const beranda = () => {
               {/* ROW 1 */}
               <Box
                 gridColumn="span 3"
-                backgroundColor={colors.primary[400]}
+                backgroundColor="#ffffff"
+                borderRadius="10px"
                 display="flex"
                 alignItems="center"
                 justifyContent="center"
               >
                 <StatBox
+                  title="Rp25.000.000"
                   subtitle="Total pendapatan di bulan ini"
                   increase="25%"
-                  title="Rp25.000.000"
                   icon={
-                    <FolderIcon
-                      sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
-                    />
+                    // <FolderIcon sx={{ color: "#242424", fontSize: "26px" }} />
+                    <FaIcons.FaMoneyCheck style={{ fontSize: "26px" }} />
                   }
                 />
               </Box>
               <Box
                 gridColumn="span 3"
-                backgroundColor={colors.primary[400]}
+                backgroundColor={"#ffffff"}
+                borderRadius="10px"
                 display="flex"
                 alignItems="center"
                 justifyContent="center"
@@ -80,15 +101,17 @@ const beranda = () => {
                   increase="12%"
                   title="Rp10.556.785"
                   icon={
-                    <PointOfSaleIcon
-                      sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
-                    />
+                    // <PointOfSaleIcon
+                    //   sx={{ color: "#242424", fontSize: "26px" }}
+                    // />
+                    <FaIcons.FaMoneyCheckAlt style={{ fontSize: "26px" }} />
                   }
                 />
               </Box>
               <Box
                 gridColumn="span 3"
-                backgroundColor={colors.primary[400]}
+                backgroundColor={"#ffffff"}
+                borderRadius="10px"
                 display="flex"
                 alignItems="center"
                 justifyContent="center"
@@ -98,9 +121,10 @@ const beranda = () => {
                   increase="5%"
                   title="1250"
                   icon={
-                    <PersonAddIcon
-                      sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
-                    />
+                    // <PersonAddIcon
+                    //   sx={{ color: "#242424", fontSize: "26px" }}
+                    // />
+                    <FaIcons.FaUsers style={{ fontSize: "26px" }} />
                   }
                 />
               </Box>
@@ -110,14 +134,14 @@ const beranda = () => {
       </div>
 
       <div className="section col-sm-12 p-3">
-        <div class="card p-5">
+        <div class="card">
           <div>
-            <select>
+            <select className="beranda_select">
               <option hidden>Jumlah Pemasukan</option>
               <option>Rata-Rata Transaksi</option>
               <option>Jumlah Agen</option>
             </select>
-            <h5>Desember 2022</h5>
+            <h5 className="beranda_title">Bulanan 2022</h5>
           </div>
 
           <div className="section-content">

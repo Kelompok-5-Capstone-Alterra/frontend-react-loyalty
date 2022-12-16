@@ -1,13 +1,31 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { useEffect } from "react";
 import * as FaIcons from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { API } from "../../auth";
+import AuthContext from "../../context/AuthProvider";
 
 function EditKategori() {
+  const [state] = useContext(AuthContext);
   const navigate = useNavigate();
   const [form, setForm] = useState({
-    namaKategori: "kategori",
+    name: "",
   });
-  const { namaKategori } = form;
+  const { id } = useParams();
+  const { name } = form;
+  const Token = state.user.token;
+
+  const getData = async () => {
+    try {
+      const response = await API.get(`/categories/${id}`);
+      console.log(response.data.data);
+      setForm({
+        name: response.data.data.name,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleOnChange = (e) => {
     setForm({
@@ -16,17 +34,25 @@ function EditKategori() {
     });
   };
 
-  const handleOnSubmit = (e) => {
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const handleOnSubmit = async (e) => {
     try {
       e.preventDefault();
       const body = {
-        namaKategori,
+        name,
+      };
+      const headers = {
+        headers: { Authorization: `Bearer ${Token}` },
       };
       console.log(body);
-      alert("pesan berhasil dikirim");
-      navigate("/produk");
+      alert("Berhasil mengedit kategori");
+      await API.put(`/categories/${id}`, body, headers);
+      navigate("/kategori");
     } catch (error) {
-      alert("pesan tidak berhasil dikirim");
+      alert("Tidak berhasil mengedit kategori");
       console.log(error);
     }
   };
@@ -45,8 +71,8 @@ function EditKategori() {
           <input
             type="text"
             placeholder="Tambahkan Nama Produk Anda..."
-            value={namaKategori}
-            name="namaKategori"
+            value={name}
+            name="name"
             onChange={handleOnChange}
           />
         </div>

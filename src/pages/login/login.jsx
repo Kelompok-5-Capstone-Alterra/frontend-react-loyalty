@@ -1,19 +1,6 @@
-<<<<<<< HEAD
-// import { useRef, useState, useEffect } from "react";
-// import useAuth from "../hooks/useAuth";
-// import { Link, useNavigate, useLocation } from "react-router-dom";
-// import "./login.scss";
-// import axios from "../api/axios";
-
-// const LOGIN_URL = "/auth/signin";
-
-// const Login = () => {
-//   const { setAuth } = useAuth();
-=======
->>>>>>> a51c67031602486c28a22331b5900696bc7b7125
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { API } from "../../api/axios";
+import { API } from "../../auth";
 import "./login.scss";
 import backgroundlogin from "../../assets/img/backgroundlogin.svg";
 import logologin from "../../assets/img/logologin.svg";
@@ -113,7 +100,7 @@ const Login = () => {
                   <p>
                     <FaIcons.FaPhoneAlt />
                   </p>
-                  <input type="text" placeholder="Masukan No.Hp anda" />
+                  <input type="text" placeholder="Masukan nomor hp anda" />
                 </div>
                 <button>Daftar</button>
               </form>

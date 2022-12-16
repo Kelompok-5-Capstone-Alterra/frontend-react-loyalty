@@ -3,9 +3,12 @@ import * as FaIcons from "react-icons/fa";
 import axios from "axios";
 import "./agen.scss";
 import Modal from "../../components/modal/modal";
+import dateFormat from "dateformat";
 
 const Agen = () => {
-  const API = "https://jsonplaceholder.typicode.com/users";
+  const API = "https://goapi.kuroyamii.works/auth/users";
+  const token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVhdGVkX2F0IjoiMjAyMi0xMi0wOFQyMjozODo1NS41NjMyODU1NDIrMDg6MDAiLCJkYXRhIjp7Im5hbWUiOiJtdWhhbW1hZHNoZXZhcml6a3kiLCJlbWFpbCI6Im11aGFtbWFkc2hldmFyaXpreUBnbWFpbC5jb20iLCJtb2JpbGVfbnVtYmVyIjoiMDgxODA3ODc4ODQyIiwicm9sZSI6eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiY3JlYXRlZF9hdCI6IjIwMjItMTItMDJUMTY6MTk6MTgrMDg6MDAiLCJ1cGRhdGVkX2F0IjoiMjAyMi0xMi0wMlQxNjoxOToxOCswODowMCJ9fSwic3ViIjoiMjgxNTk0ZTktNmVhOC00ZDQ5LTljOGEtOTk3NTk2YmJhZTcwIn0.k2X2_AMv66KDnaa9be-T9ay2WWUY-b6rITpPdQS2StI";
   const [showModal, setShowModal] = useState(false);
   const [data, setData] = useState([]);
 
@@ -15,8 +18,10 @@ const Agen = () => {
 
   const getData = async () => {
     try {
-      const response = await axios.get(API);
-      setData(response.data);
+      const response = await axios.get(API, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setData(response.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -25,8 +30,6 @@ const Agen = () => {
   useEffect(() => {
     getData();
   }, []);
-
-  console.log(data);
 
   return (
     <>
@@ -65,20 +68,20 @@ const Agen = () => {
               <th>Saldo(Rp)</th>
               <th>Opsi</th>
             </thead>
-            {data.map((item, index) => (
+            {data?.map((item, index) => (
               <tbody key={index}>
                 <td>
                   <img
-                    src="https://i.pinimg.com/564x/24/f2/62/24f262538c19f1a689fd4ecba3a4d7b6.jpg"
+                    src="https://static.vecteezy.com/system/resources/thumbnails/005/005/788/small/user-icon-in-trendy-flat-style-isolated-on-grey-background-user-symbol-for-your-web-site-design-logo-app-ui-illustration-eps10-free-vector.jpg"
                     alt="profile"
                   />
                   {item.name}
                 </td>
                 <td>{item.email}</td>
-                <td>{item.address.suite}</td>
-                <td>{item.phone}</td>
-                <td>123</td>
-                <td>123</td>
+                <td>{dateFormat(item.created_at)}</td>
+                <td>{item.mobile_number}</td>
+                <td>{item.user_coin.amount}</td>
+                <td>{item.credit.amount}</td>
                 <td>
                   <button onClick={ClickModal}>
                     <FaIcons.FaTrash />

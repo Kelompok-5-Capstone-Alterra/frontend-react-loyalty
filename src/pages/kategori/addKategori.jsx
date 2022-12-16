@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import * as FaIcons from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { API } from "../../auth";
+import AuthContext from "../../context/AuthProvider";
 
 function AddKategori() {
-  const navigate = useNavigate();
+  const [state] = useContext(AuthContext);
   const [form, setForm] = useState({
-    namaKategori: "",
+    name: "",
   });
-  const { namaKategori } = form;
+  const Token = state.user.token;
+  const navigate = useNavigate();
+  const { name } = form;
 
   const handleOnChange = (e) => {
     setForm({
@@ -16,17 +20,23 @@ function AddKategori() {
     });
   };
 
-  const handleOnSubmit = (e) => {
+  console.log(Token);
+
+  const handleOnSubmit = async (e) => {
     try {
       e.preventDefault();
       const body = {
-        namaKategori,
+        name: name,
+      };
+      const headers = {
+        headers: { Authorization: `Bearer ${Token}` },
       };
       console.log(body);
-      alert("pesan berhasil dikirim");
+      await API.post("/categories", body, headers);
+      alert("Berhasil menambahkan kategori");
       navigate("/kategori");
     } catch (error) {
-      alert("pesan tidak berhasil dikirim");
+      alert("Tidak berhasil menambahkan kategori");
       console.log(error);
     }
   };
@@ -45,8 +55,8 @@ function AddKategori() {
           <input
             type="text"
             placeholder="Kategori Produk..."
-            value={namaKategori}
-            name="namaKategori"
+            value={name}
+            name="name"
             onChange={handleOnChange}
           />
         </div>

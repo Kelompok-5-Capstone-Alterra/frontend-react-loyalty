@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const API = axios.create({
-  baseURL: "http://goapi.kuroyamii.works/",
+  baseURL: "https://goapi.kuroyamii.works",
 });
 
 // export const setAuthToken = (token) => {
