@@ -9,19 +9,22 @@ import { API } from "../../auth";
 const Agen = () => {
   const [state] = useContext(AuthContext);
   const [showModal, setShowModal] = useState(false);
+  const [idDelete, setIdDelete] = useState("");
+
   const [data, setData] = useState([]);
   const Token = state.user.token;
 
   const ClickModal = (id) => {
     console.log(id);
     setShowModal((prev) => !prev);
+    setIdDelete(id);
   };
 
   const handleDelete = async () => {
     try {
-      // await API.delete(`/admin/users/${idDelete}`, {
-      //   headers: { Authorization: `Bearer ${Token}` },
-      // });
+      await API.delete(`/admin/users/${idDelete}`, {
+        headers: { Authorization: `Bearer ${Token}` },
+      });
       setShowModal((prev) => !prev);
     } catch (error) {
       console.log(error);
