@@ -1,25 +1,37 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import * as FaIcons from "react-icons/fa";
-import axios from "axios";
 import "./agen.scss";
 import Modal from "../../components/modal/modal";
 import dateFormat from "dateformat";
+import AuthContext from "../../context/AuthProvider";
+import { API } from "../../auth";
 
 const Agen = () => {
-  const API = "https://goapi.kuroyamii.works/admin/users";
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVhdGVkX2F0IjoiMjAyMi0xMi0wOFQyMjozODo1NS41NjMyODU1NDIrMDg6MDAiLCJkYXRhIjp7Im5hbWUiOiJtdWhhbW1hZHNoZXZhcml6a3kiLCJlbWFpbCI6Im11aGFtbWFkc2hldmFyaXpreUBnbWFpbC5jb20iLCJtb2JpbGVfbnVtYmVyIjoiMDgxODA3ODc4ODQyIiwicm9sZSI6eyJpZCI6MSwibmFtZSI6ImFkbWluIiwiY3JlYXRlZF9hdCI6IjIwMjItMTItMDJUMTY6MTk6MTgrMDg6MDAiLCJ1cGRhdGVkX2F0IjoiMjAyMi0xMi0wMlQxNjoxOToxOCswODowMCJ9fSwic3ViIjoiMjgxNTk0ZTktNmVhOC00ZDQ5LTljOGEtOTk3NTk2YmJhZTcwIn0.k2X2_AMv66KDnaa9be-T9ay2WWUY-b6rITpPdQS2StI";
+  const [state] = useContext(AuthContext);
   const [showModal, setShowModal] = useState(false);
   const [data, setData] = useState([]);
+  const Token = state.user.token;
 
-  const ClickModal = () => {
+  const ClickModal = (id) => {
+    console.log(id);
     setShowModal((prev) => !prev);
+  };
+
+  const handleDelete = async () => {
+    try {
+      // await API.delete(`/admin/users/${idDelete}`, {
+      //   headers: { Authorization: `Bearer ${Token}` },
+      // });
+      setShowModal((prev) => !prev);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const getData = async () => {
     try {
-      const response = await axios.get(API, {
-        headers: { Authorization: `Bearer ${token}` },
+      const response = await API.get("/admin/users", {
+        headers: { Authorization: `Bearer ${Token}` },
       });
       setData(response.data.data);
     } catch (error) {
@@ -40,7 +52,7 @@ const Agen = () => {
           </p>
           <h1>Apakah anda yakin ingin menghapus agen?</h1>
           <div>
-            <button>Yakin</button>
+            <button onClick={handleDelete}>Yakin</button>
             <button onClick={() => setShowModal(false)}>Batal</button>
           </div>
         </div>
@@ -83,7 +95,7 @@ const Agen = () => {
                 <td>{item.user_coin.amount}</td>
                 <td>{item.credit.amount}</td>
                 <td>
-                  <button onClick={ClickModal}>
+                  <button onClick={() => ClickModal(item.id)}>
                     <FaIcons.FaTrash />
                   </button>
                 </td>
