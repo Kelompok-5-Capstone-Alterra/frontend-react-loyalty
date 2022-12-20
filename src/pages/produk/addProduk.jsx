@@ -18,6 +18,14 @@ function AddProduk() {
     coins: "",
     category_id: "",
   });
+  const [msgJudul, setMsgJudul] = useState("");
+  const [msgDesc, setMsgDesc] = useState("");
+  const [msgProvider, setMsgProvider] = useState("");
+  const [msgMasaAktif, setMsgMasaAktif] = useState("");
+  const [msgHarga, setMsgHarga] = useState("");
+  const [msgKategori, setMsgKategori] = useState("");
+  const [msgMinimal, setMsgMinimal] = useState("");
+  const [msgKoin, setMsgKoin] = useState("");
   const Token = state.user.token;
   const {
     name,
@@ -55,9 +63,30 @@ function AddProduk() {
     try {
       e.preventDefault();
 
-      // if (produk === "") {
-      //   setMessageProduct("silahkan isi nama product");
-      // }
+      if (name === "") {
+        setMsgJudul("Silahkan Masukan Judul");
+      }
+      if (description === "") {
+        setMsgDesc("Silahkan Masukan Deskripsi");
+      }
+      if (provider === "") {
+        setMsgProvider("Silahkan Masukan Provider");
+      }
+      if (active_period === "") {
+        setMsgMasaAktif("Silahkan Masukan Masa Aktif");
+      }
+      if (price === "") {
+        setMsgHarga("Silahkan Masukan Harga");
+      }
+      if (category_id === "") {
+        setMsgKategori("Silahkan Pilih Kategori");
+      }
+      if (minimum_transaction === "") {
+        setMsgMinimal("Silahkan Masukan Minimal Transaksi");
+      }
+      if (coins === "") {
+        setMsgKoin("Silahkan Masukan Koin Transaksi");
+      }
 
       const body = {
         name: name,
@@ -72,7 +101,7 @@ function AddProduk() {
       const headers = {
         headers: { Authorization: `Bearer ${Token}` },
       };
-      console.log(body);
+      // console.log(body);
       await API.post("/admin/products", body, headers);
       alert("Berhasil menambahkan produk");
       navigate("/produk");
@@ -100,6 +129,7 @@ function AddProduk() {
             name="name"
             onChange={handleOnChange}
           />
+          <p className="text_red">{msgJudul}</p>
         </div>
         <div className="componentInput">
           <label>Deskripsi</label>
@@ -109,6 +139,7 @@ function AddProduk() {
             value={description}
             onChange={handleOnChange}
           />
+          <p className="text_red">{msgDesc}</p>
         </div>
         <div className="componentInput">
           <label>Provider</label>
@@ -119,6 +150,7 @@ function AddProduk() {
             name="provider"
             onChange={handleOnChange}
           />
+          <p className="text_red">{msgProvider}</p>
         </div>
         <div className="input_row">
           <div className="componentInput">
@@ -130,6 +162,7 @@ function AddProduk() {
               name="active_period"
               onChange={handleOnChange}
             />
+            <p className="text_red">{msgMasaAktif}</p>
           </div>
           <div className="componentInput">
             <label>Harga (Rp)</label>
@@ -140,6 +173,7 @@ function AddProduk() {
               name="price"
               onChange={handleOnChange}
             />
+            <p className="text_red">{msgHarga}</p>
           </div>
         </div>
         <div className="componentInput">
@@ -156,6 +190,7 @@ function AddProduk() {
               </option>
             ))}
           </select>
+          <p className="text_red">{msgKategori}</p>
         </div>
         <div className="input_row">
           <div className="componentInput">
@@ -167,6 +202,7 @@ function AddProduk() {
               name="minimum_transaction"
               onChange={handleOnChange}
             />
+            <p className="text_red">{msgMinimal}</p>
           </div>
           <div className="componentInput">
             <label>Koin Transaksi</label>
@@ -177,6 +213,7 @@ function AddProduk() {
               name="coins"
               onChange={handleOnChange}
             />
+            <p className="text_red">{msgKoin}</p>
           </div>
         </div>
         <div className="rowButton">

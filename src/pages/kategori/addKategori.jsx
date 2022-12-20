@@ -9,6 +9,7 @@ function AddKategori() {
   const [form, setForm] = useState({
     name: "",
   });
+  const [message, setMessage] = useState("");
   const Token = state.user.token;
   const navigate = useNavigate();
   const { name } = form;
@@ -24,6 +25,9 @@ function AddKategori() {
 
   const handleOnSubmit = async (e) => {
     try {
+      if (name === "") {
+        setMessage("Silahkan Masukan Nama Kategori");
+      }
       e.preventDefault();
       const body = {
         name: name,
@@ -59,6 +63,7 @@ function AddKategori() {
             name="name"
             onChange={handleOnChange}
           />
+          <p className="text_red">{message}</p>
         </div>
         <div className="rowButton">
           <button>Buat</button>
