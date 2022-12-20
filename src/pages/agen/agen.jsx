@@ -10,12 +10,19 @@ const Agen = () => {
   const [state] = useContext(AuthContext);
   const [showModal, setShowModal] = useState(false);
   const [idDelete, setIdDelete] = useState("");
+  const [query, setQuery] = useState("");
+  const keys = ["name", "email"];
 
   const [data, setData] = useState([]);
   const Token = state.user.token;
 
+  const Search = (data) => {
+    return data.filter((item) =>
+      keys.some((key) => item[key].toLowerCase().includes(query))
+    );
+  };
+
   const ClickModal = (id) => {
-    console.log(id);
     setShowModal((prev) => !prev);
     setIdDelete(id);
   };
@@ -66,7 +73,12 @@ const Agen = () => {
             <label htmlFor="search">
               <FaIcons.FaSearch />
             </label>
-            <input type="search" id="search" placeholder="Search..." />
+            <input
+              type="search"
+              id="search"
+              placeholder="Search..."
+              onChange={(e) => setQuery(e.target.value.toLowerCase())}
+            />
           </div>
           <div className="input">
             <input type="date" />
@@ -75,33 +87,37 @@ const Agen = () => {
         <div className="bottom">
           <table>
             <thead>
-              <th>Agen</th>
-              <th>Email</th>
-              <th>Tanggal</th>
-              <th>Nomor HP</th>
-              <th>Poin</th>
-              <th>Saldo(Rp)</th>
-              <th>Opsi</th>
+              <tr>
+                <th>Agen</th>
+                <th>Email</th>
+                <th>Tanggal</th>
+                <th>Nomor HP</th>
+                <th>Poin</th>
+                <th>Saldo(Rp)</th>
+                <th>Opsi</th>
+              </tr>
             </thead>
-            {data?.map((item, index) => (
+            {Search(data)?.map((item, index) => (
               <tbody key={index}>
-                <td>
-                  <img
-                    src="https://static.vecteezy.com/system/resources/thumbnails/005/005/788/small/user-icon-in-trendy-flat-style-isolated-on-grey-background-user-symbol-for-your-web-site-design-logo-app-ui-illustration-eps10-free-vector.jpg"
-                    alt="profile"
-                  />
-                  {item.name}
-                </td>
-                <td>{item.email}</td>
-                <td>{dateFormat(item.created_at)}</td>
-                <td>{item.mobile_number}</td>
-                <td>{item.user_coin.amount}</td>
-                <td>{item.credit.amount}</td>
-                <td>
-                  <button onClick={() => ClickModal(item.id)}>
-                    <FaIcons.FaTrash />
-                  </button>
-                </td>
+                <tr>
+                  <td>
+                    <img
+                      src="https://static.vecteezy.com/system/resources/thumbnails/005/005/788/small/user-icon-in-trendy-flat-style-isolated-on-grey-background-user-symbol-for-your-web-site-design-logo-app-ui-illustration-eps10-free-vector.jpg"
+                      alt="profile"
+                    />
+                    {item.name}
+                  </td>
+                  <td>{item.email}</td>
+                  <td>{dateFormat(item.created_at, "fullDate")}</td>
+                  <td>{item.mobile_number}</td>
+                  <td>{item.user_coin.amount}</td>
+                  <td>{item.credit.amount}</td>
+                  <td>
+                    <button onClick={() => ClickModal(item.id)}>
+                      <FaIcons.FaTrash />
+                    </button>
+                  </td>
+                </tr>
               </tbody>
             ))}
           </table>

@@ -11,6 +11,8 @@ const Kategori = () => {
   const [showModal, setShowModal] = useState(false);
   const [data, setData] = useState([]);
   const [idDelete, setIdDelete] = useState("");
+  const [query, setQuery] = useState("");
+  const keys = ["name"];
   const Token = state.user.token;
   const navigate = useNavigate();
   const ClickModal = (id) => {
@@ -18,7 +20,11 @@ const Kategori = () => {
     setIdDelete(id);
   };
 
-  console.log(idDelete);
+  const Search = (data) => {
+    return data.filter((item) =>
+      keys.some((key) => item[key].toLowerCase().includes(query))
+    );
+  };
 
   const handleDelete = async () => {
     try {
@@ -64,7 +70,12 @@ const Kategori = () => {
             <label htmlFor="search">
               <FaIcons.FaSearch />
             </label>
-            <input type="search" id="search" placeholder="Search..." />
+            <input
+              type="search"
+              id="search"
+              placeholder="Search..."
+              onChange={(e) => setQuery(e.target.value.toLowerCase())}
+            />
           </div>
           <div className="topRight">
             <button onClick={() => navigate("/kategori/add-kategori")}>
@@ -75,26 +86,30 @@ const Kategori = () => {
         <div className="bottom">
           <table>
             <thead>
-              <th>Nama Kategori</th>
-              <th>Opsi</th>
+              <tr>
+                <th>Nama Kategori</th>
+                <th>Opsi</th>
+              </tr>
             </thead>
-            {data.map((item, index) => (
+            {Search(data).map((item, index) => (
               <tbody key={index}>
-                <td>{item.name}</td>
-                <td>
-                  <div>
-                    <button
-                      onClick={() =>
-                        navigate(`/kategori/edit-kategori/${item.id}`)
-                      }
-                    >
-                      <FaIcons.FaEdit />
-                    </button>
-                    <button onClick={() => ClickModal(item.id)}>
-                      <FaIcons.FaTrash />
-                    </button>
-                  </div>
-                </td>
+                <tr>
+                  <td>{item.name}</td>
+                  <td>
+                    <div>
+                      <button
+                        onClick={() =>
+                          navigate(`/kategori/edit-kategori/${item.id}`)
+                        }
+                      >
+                        <FaIcons.FaEdit />
+                      </button>
+                      <button onClick={() => ClickModal(item.id)}>
+                        <FaIcons.FaTrash />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
               </tbody>
             ))}
           </table>

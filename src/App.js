@@ -24,7 +24,6 @@ function App() {
   const [state, dispatch] = useContext(AuthContext);
 
   const Token = localStorage.token;
-  console.log(Token);
 
   const checkUser = async () => {
     const data = {
@@ -50,8 +49,6 @@ function App() {
     checkUser();
   }, []);
 
-  // console.log(localStorage.token);
-  console.log(state);
   return (
     <>
       {state.isLogin ? (

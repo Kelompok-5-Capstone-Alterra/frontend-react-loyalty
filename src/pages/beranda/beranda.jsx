@@ -35,11 +35,11 @@ const beranda = () => {
   return (
     <div className="row">
       <div className="col-md-12 sw-1">
-        <div class="card">
+        <div className="card">
           {/* <img src={grafik} alt="" /> */}
           {/* <h5>Laporan bisnis</h5> */}
           <div
-            class="box-container"
+            className="box-container"
             style={{
               background: "#003060",
               padding: "1rem",
@@ -134,7 +134,7 @@ const beranda = () => {
       </div>
 
       <div className="section col-sm-12 p-3">
-        <div class="card">
+        <div className="card">
           <div>
             <select className="beranda_select">
               <option hidden>Jumlah Pemasukan</option>

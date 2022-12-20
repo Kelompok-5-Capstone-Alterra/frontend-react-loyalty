@@ -5,6 +5,7 @@ import Modal from "../../components/modal/modal";
 import { useNavigate } from "react-router-dom";
 import { API } from "../../auth";
 import AuthContext from "../../context/AuthProvider";
+import { FormatRupiah } from "@arismun/format-rupiah";
 
 const Produk = () => {
   const [state] = useContext(AuthContext);
@@ -15,11 +16,20 @@ const Produk = () => {
   const [form, setForm] = useState({
     category: "",
   });
+  const [query, setQuery] = useState("");
+  const keys = ["name", "description", "provider"];
   const Token = state.user.token;
   const navigate = useNavigate();
+
   const ClickModal = (id) => {
     setShowModal((prev) => !prev);
     setIdDelete(id);
+  };
+
+  const Search = (data) => {
+    return data.filter((item) =>
+      keys.some((key) => item[key].toLowerCase().includes(query))
+    );
   };
 
   const { category } = form;
@@ -64,8 +74,6 @@ const Produk = () => {
     getCategori();
   }, []);
 
-  console.log(category);
-
   return (
     <>
       <Modal showModal={showModal} setShowModal={setShowModal}>
@@ -106,7 +114,12 @@ const Produk = () => {
             <label htmlFor="search">
               <FaIcons.FaSearch />
             </label>
-            <input type="search" id="search" placeholder="Search..." />
+            <input
+              type="search"
+              id="search"
+              placeholder="Search..."
+              onChange={(e) => setQuery(e.target.value.toLowerCase())}
+            />
           </div>
           <div className="topRight">
             <select
@@ -131,64 +144,72 @@ const Produk = () => {
         <div className="bottom">
           <table>
             <thead>
-              <th>Judul</th>
-              <th>Deskripsi</th>
-              <th>Provider</th>
-              <th>Masa Aktif (hari)</th>
-              <th>Kategori</th>
-              <th>Harga (Rp)</th>
-              <th>Opsi</th>
+              <tr>
+                <th>Judul</th>
+                <th>Deskripsi</th>
+                <th>Provider</th>
+                <th>Masa Aktif (hari)</th>
+                <th>Kategori</th>
+                <th>Harga (Rp)</th>
+                <th>Opsi</th>
+              </tr>
             </thead>
-            {data.map((item, index) => {
+            {Search(data)?.map((item, index) => {
               return (
                 <>
                   {category === "" ? (
                     <tbody key={index}>
-                      <td>{item.name}</td>
-                      <td>{item.description}</td>
-                      <td>{item.provider}</td>
-                      <td>{item.active_period}</td>
-                      <td>{item.category.name}</td>
-                      <td>{item.price}</td>
-                      <td>
-                        <div>
-                          <button
-                            onClick={() =>
-                              navigate(`/produk/edit-produk/${item.id}`)
-                            }
-                          >
-                            <FaIcons.FaEdit />
-                          </button>
-                          <button onClick={() => ClickModal(item.id)}>
-                            <FaIcons.FaTrash />
-                          </button>
-                        </div>
-                      </td>
+                      <tr>
+                        <td>{item.name}</td>
+                        <td>{item.description}</td>
+                        <td>{item.provider}</td>
+                        <td>{item.active_period}</td>
+                        <td>{item.category.name}</td>
+                        <td>
+                          <FormatRupiah value={item.price} />
+                        </td>
+                        <td>
+                          <div>
+                            <button
+                              onClick={() =>
+                                navigate(`/produk/edit-produk/${item.id}`)
+                              }
+                            >
+                              <FaIcons.FaEdit />
+                            </button>
+                            <button onClick={() => ClickModal(item.id)}>
+                              <FaIcons.FaTrash />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
                     </tbody>
                   ) : (
                     <>
                       {item.category.name === category ? (
                         <tbody key={index}>
-                          <td>{item.name}</td>
-                          <td>{item.description}</td>
-                          <td>{item.provider}</td>
-                          <td>{item.active_period}</td>
-                          <td>{item.category.name}</td>
-                          <td>{item.price}</td>
-                          <td>
-                            <div>
-                              <button
-                                onClick={() =>
-                                  navigate(`/produk/edit-produk/${item.id}`)
-                                }
-                              >
-                                <FaIcons.FaEdit />
-                              </button>
-                              <button onClick={() => ClickModal(item.id)}>
-                                <FaIcons.FaTrash />
-                              </button>
-                            </div>
-                          </td>
+                          <tr>
+                            <td>{item.name}</td>
+                            <td>{item.description}</td>
+                            <td>{item.provider}</td>
+                            <td>{item.active_period}</td>
+                            <td>{item.category.name}</td>
+                            <td>{item.price}</td>
+                            <td>
+                              <div>
+                                <button
+                                  onClick={() =>
+                                    navigate(`/produk/edit-produk/${item.id}`)
+                                  }
+                                >
+                                  <FaIcons.FaEdit />
+                                </button>
+                                <button onClick={() => ClickModal(item.id)}>
+                                  <FaIcons.FaTrash />
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
                         </tbody>
                       ) : null}
                     </>

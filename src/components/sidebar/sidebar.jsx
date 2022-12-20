@@ -18,7 +18,6 @@ const Sidebar = ({ children }) => {
     });
     navigate("/");
   };
-  console.log(state);
 
   return (
     <section className="sidebardashboard">

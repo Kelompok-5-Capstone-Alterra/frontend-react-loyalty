@@ -34,7 +34,6 @@ function EditProduk() {
   const getData = async () => {
     try {
       const response = await API.get(`/products/${id}`);
-      console.log(response.data.data);
       setForm({
         name: response.data.data.name,
         description: response.data.data.description,
@@ -64,7 +63,6 @@ function EditProduk() {
     getCategori();
   }, []);
 
-  // console.log(token);
   const handleOnChange = (e) => {
     setForm({
       ...form,
@@ -75,11 +73,6 @@ function EditProduk() {
   const handleOnSubmit = async (e) => {
     try {
       e.preventDefault();
-
-      // if (produk === "") {
-      //   setMessageProduct("silahkan isi nama product");
-      // }
-
       const body = {
         name: name,
         description: description,
@@ -93,7 +86,6 @@ function EditProduk() {
       const headers = {
         headers: { Authorization: `Bearer ${Token}` },
       };
-      console.log(body);
       await API.put(`/admin/products/${id}`, body, headers);
       alert("Berhasil mengedit produk");
       navigate("/produk");

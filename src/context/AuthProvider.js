@@ -9,7 +9,6 @@ const initialState = {
 
 const reducer = (state, action) => {
   const { type, payload } = action;
-  console.log(type);
 
   switch (type) {
     case "USER_SUCCESS":

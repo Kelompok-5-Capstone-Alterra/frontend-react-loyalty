@@ -21,8 +21,6 @@ function AddKategori() {
     });
   };
 
-  console.log(Token);
-
   const handleOnSubmit = async (e) => {
     try {
       if (name === "") {
@@ -35,7 +33,6 @@ function AddKategori() {
       const headers = {
         headers: { Authorization: `Bearer ${Token}` },
       };
-      console.log(body);
       await API.post("/categories", body, headers);
       alert("Berhasil menambahkan kategori");
       navigate("/kategori");

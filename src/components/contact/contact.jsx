@@ -37,7 +37,6 @@ const Contact = () => {
         alert("Harap ceklis terlebih dahulu");
       } else {
         alert("Pesan berhasil dikirim");
-        console.log(body);
         setForm({
           name: "",
           email: "",

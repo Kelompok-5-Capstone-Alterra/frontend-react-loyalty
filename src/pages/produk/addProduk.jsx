@@ -64,10 +64,10 @@ function AddProduk() {
       e.preventDefault();
 
       if (name === "") {
-        setMsgJudul("Silahkan Masukan Judul");
+        setMsgJudul("Silahkan masukan Judul");
       }
       if (description === "") {
-        setMsgDesc("Silahkan Masukan Deskripsi");
+        setMsgDesc("Silahkan Masukan Description");
       }
       if (provider === "") {
         setMsgProvider("Silahkan Masukan Provider");
@@ -79,7 +79,7 @@ function AddProduk() {
         setMsgHarga("Silahkan Masukan Harga");
       }
       if (category_id === "") {
-        setMsgKategori("Silahkan Pilih Kategori");
+        setMsgKategori("Silahkan Pilih Category");
       }
       if (minimum_transaction === "") {
         setMsgMinimal("Silahkan Masukan Minimal Transaksi");

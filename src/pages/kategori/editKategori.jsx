@@ -18,7 +18,6 @@ function EditKategori() {
   const getData = async () => {
     try {
       const response = await API.get(`/categories/${id}`);
-      console.log(response.data.data);
       setForm({
         name: response.data.data.name,
       });
@@ -47,7 +46,6 @@ function EditKategori() {
       const headers = {
         headers: { Authorization: `Bearer ${Token}` },
       };
-      console.log(body);
       alert("Berhasil mengedit kategori");
       await API.put(`/categories/${id}`, body, headers);
       navigate("/kategori");

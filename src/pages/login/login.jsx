@@ -54,7 +54,6 @@ const Login = () => {
           type: "LOGIN SUCCESS",
           payload: data,
         });
-        console.log(state);
         navigate("/");
       } catch (error) {
         setErrMsg("Username atau password tidak sesuai");

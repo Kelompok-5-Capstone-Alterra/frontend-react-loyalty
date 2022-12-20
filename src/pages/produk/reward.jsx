@@ -65,8 +65,6 @@ const Reward = () => {
     getCategori();
   }, []);
 
-  console.log(category);
-
   return (
     <>
       <Modal showModal={showModal} setShowModal={setShowModal}>
