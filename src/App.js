@@ -68,9 +68,9 @@ function App() {
               path="kategori/edit-kategori/:id"
               element={<EditKategori />}
             />
-            <Route path="keuangan" element={<Keuangan />} />
+            {/* <Route path="keuangan" element={<Keuangan />} />
             <Route path="pembayaran" element={<Pembayaran />} />
-            <Route path="berkas" element={<Berkas />} />
+            <Route path="berkas" element={<Berkas />} /> */}
           </Routes>
         </Sidebar>
       ) : (

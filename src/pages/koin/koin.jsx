@@ -4,6 +4,7 @@ import "./koin.scss";
 import Modal from "../../components/modal/modal";
 import dateFormat from "dateformat";
 import { API } from "../../auth";
+import { CSVLink} from 'react-csv';
 import AuthContext from "../../context/AuthProvider";
 
 const Koin = () => {
@@ -111,7 +112,7 @@ const Koin = () => {
             <input type="date" />
           </div>
           <div>
-            <button className="button_transaksi">Export</button>
+            <CSVLink data={ data }  filename="DataKoin" className="button_transaksi">Export</CSVLink>
           </div>
         </div>
         <div className="bottom">

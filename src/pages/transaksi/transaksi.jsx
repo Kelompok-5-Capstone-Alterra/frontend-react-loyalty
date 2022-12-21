@@ -3,6 +3,7 @@ import * as FaIcons from "react-icons/fa";
 import "./transaksi.scss";
 import Modal from "../../components/modal/modal";
 import dateFormat from "dateformat";
+import { CSVLink} from 'react-csv';
 import { API } from "../../auth";
 import AuthContext from "../../context/AuthProvider";
 import { FormatRupiah } from "@arismun/format-rupiah";
@@ -119,7 +120,7 @@ const Transaksi = () => {
             <input type="date" />
           </div>
           <div>
-            <button className="button_transaksi">Export</button>
+            <CSVLink data={ data }  filename="DataTransaksi" className="button_transaksi">Export</CSVLink>
           </div>
         </div>
         <div className="bottom">
