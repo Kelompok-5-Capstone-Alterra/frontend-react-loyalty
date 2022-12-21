@@ -1,26 +1,72 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import * as FaIcons from "react-icons/fa";
-import axios from "axios";
 import "./koin.scss";
+import { CSVLink } from "react-csv";
 import Modal from "../../components/modal/modal";
-// import "@fortawesome/fontawesome-free/css/all.css";
-// import "bootstrap/dist/css/bootstrap.css";
-// import { Button } from "@themesberg/react-bootstrap";
 import dateFormat from "dateformat";
+import { API } from "../../auth";
+import AuthContext from "../../context/AuthProvider";
 
-function Koin() {
-  const API = "https://jsonplaceholder.typicode.com/users";
+const Koin = () => {
+  const [state] = useContext(AuthContext);
   const [showModal, setShowModal] = useState(false);
   const [data, setData] = useState([]);
+  const [dataAgen, setDataAgen] = useState([]);
+  const [dataReward, setDataReward] = useState([]);
+  const [dataPoin, setDataPoin] = useState([]);
+  const Token = state.user.token;
+  const [query, setQuery] = useState("");
+  const keys = ["name"];
 
   const ClickModal = () => {
     setShowModal((prev) => !prev);
   };
 
+  const Search = (data) => {
+    return data.filter((item) =>
+      keys.some((key) => item.products[key].toLowerCase().includes(query))
+    );
+  };
+
   const getData = async () => {
     try {
-      const response = await axios.get(API);
-      setData(response.data);
+      const response = await API.get("admin/transactions", {
+        headers: { Authorization: `Bearer ${Token}` },
+      });
+      setData(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getDataAgen = async () => {
+    try {
+      const response = await API.get("/admin/users", {
+        headers: { Authorization: `Bearer ${Token}` },
+      });
+      setDataAgen(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getDataReward = async () => {
+    try {
+      const response = await API.get("/rewards", {
+        headers: { Authorization: `Bearer ${Token}` },
+      });
+      setDataReward(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getDataPoin = async () => {
+    try {
+      const response = await API.get("/categories", {
+        headers: { Authorization: `Bearer ${Token}` },
+      });
+      setDataPoin(response.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -28,6 +74,9 @@ function Koin() {
 
   useEffect(() => {
     getData();
+    getDataAgen();
+    getDataReward();
+    getDataPoin();
   }, []);
 
   console.log(data);
@@ -52,57 +101,66 @@ function Koin() {
             <label htmlFor="search">
               <FaIcons.FaSearch />
             </label>
-            <input type="search" id="search" placeholder="Search..." />
+            <input
+              type="search"
+              id="search"
+              placeholder="Search..."
+              onChange={(e) => setQuery(e.target.value.toLowerCase())}
+            />
           </div>
           <div className="input">
             <input type="date" />
           </div>
-          <div className="btn-toolbar mb-2 mb-md-0">
-            <button size="sm">Export</button>
+          <div>
+            <CSVLink
+              data={data}
+              filename="DataKoin"
+              className="button_transaksi"
+            >
+              Export
+            </CSVLink>
           </div>
         </div>
         <div className="bottom">
           <table>
             <thead>
-              <th>Id</th>
-              <th>Nama Agen</th>
-              <th>Reward</th>
-              <th>Koin</th>
-              <th>Tanggal Dan Waktu</th>
-              <th>Status</th>
+              <tr>
+                <th>Id</th>
+                <th>Nama Agen</th>
+                <th>Reward</th>
+                <th>Koin</th>
+                <th>Tanggal Dan Waktu</th>
+                <th>Status</th>
+              </tr>
             </thead>
-            {data.map((item, index) => (
-              <tbody key={index}>
-                <td>{item.id}</td>
-                <td>{item.name}</td>
-                <td>{item.reward}</td>
-                <td>{item.koin}</td>
-                <td>{dateFormat(item.created_at)}</td>
-                <td>
-                  <label class="container">
-                    <input type="checkbox" checked="checked" />
-                    <span class="checkmark"></span>
-                  </label>
-                </td>
-              </tbody>
-            ))}
+            {Search(data)?.map((item, index) => {
+              const obj = dataAgen?.find((t) => t?.id === item.user_id);
+              const reward = dataReward?.find((t) => t?.reward === item.reward);
+
+              return (
+                <tbody key={index}>
+                  <tr>
+                    <td>{index + 1}</td>
+                    <td>{obj.name}</td>
+                    <td>{reward.name}</td>
+                    <td>{item.products.coins}</td>
+                    <td>{dateFormat(item.created_at)}</td>
+                    <td>
+                      {item.status}
+                      <label class="container">
+                        <input type="checkbox" checked="checked" />
+                        <span class="checkmark"></span>
+                      </label>
+                    </td>
+                  </tr>
+                </tbody>
+              );
+            })}
           </table>
         </div>
       </section>
     </>
   );
-}
+};
 
 export default Koin;
-
-// import React from "react";
-
-// function Koin() {
-//   return (
-//     <div>
-//       <h1>Koin</h1>
-//     </div>
-//   );
-// }
-
-// export default Koin;

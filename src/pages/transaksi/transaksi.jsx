@@ -2,9 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import * as FaIcons from "react-icons/fa";
 import "./transaksi.scss";
 import Modal from "../../components/modal/modal";
-// import "bootstrap/dist/css/bootstrap.css";
-// import { Button } from "@themesberg/react-bootstrap";
 import dateFormat from "dateformat";
+import { CSVLink } from "react-csv";
 import { API } from "../../auth";
 import AuthContext from "../../context/AuthProvider";
 import { FormatRupiah } from "@arismun/format-rupiah";
@@ -14,6 +13,7 @@ const Transaksi = () => {
   const [showModal, setShowModal] = useState(false);
   const [data, setData] = useState([]);
   const [dataAgen, setDataAgen] = useState([]);
+  const [dataCategory, setDataCategory] = useState([]);
   const Token = state.user.token;
   const [query, setQuery] = useState("");
   const keys = ["name"];
@@ -50,9 +50,21 @@ const Transaksi = () => {
     }
   };
 
+  const getDataCategory = async () => {
+    try {
+      const response = await API.get("/categories", {
+        headers: { Authorization: `Bearer ${Token}` },
+      });
+      setDataCategory(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getData();
     getDataAgen();
+    getDataCategory();
   }, []);
 
   console.log(data);
@@ -108,7 +120,13 @@ const Transaksi = () => {
             <input type="date" />
           </div>
           <div>
-            <button className="button_transaksi">Export</button>
+            <CSVLink
+              data={data}
+              filename="DataTransaksi"
+              className="button_transaksi"
+            >
+              Export
+            </CSVLink>
           </div>
         </div>
         <div className="bottom">
@@ -126,15 +144,15 @@ const Transaksi = () => {
             </thead>
             {Search(data)?.map((item, index) => {
               const obj = dataAgen?.find((t) => t?.id === item.user_id);
-              // console.log(obj);
+              const category = dataCategory?.find(
+                (t) => t?.category === item.category
+              );
               return (
                 <tbody key={index}>
                   <tr>
                     <td>{index + 1}</td>
                     <td>{obj.name}</td>
-                    <td>
-                      <FormatRupiah value={item.amount} />
-                    </td>
+                    <td>{category.name}</td>
                     <td>{item.products.name}</td>
                     <td>
                       <label htmlFor="arrow-upward" onClick={ClickModal}>
