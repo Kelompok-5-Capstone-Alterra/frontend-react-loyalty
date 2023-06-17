@@ -1,7 +1,8 @@
 import axios from "axios";
 
 export const API = axios.create({
-  baseURL: "https://goapi.kuroyamii.works/",
+  baseURL: "http://192.168.72.14:8080",
+  // baseURL: "https://goapi.kuroyamii.works/",
 });
 
 // export const setAuthToken = (token) => {

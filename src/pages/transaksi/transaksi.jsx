@@ -23,6 +23,7 @@ const Transaksi = () => {
   };
 
   const Search = (data) => {
+    console.log(data);
     return data.filter((item) =>
       keys.some((key) => item.products[key].toLowerCase().includes(query))
     );
@@ -147,12 +148,13 @@ const Transaksi = () => {
               const category = dataCategory?.find(
                 (t) => t?.category === item.category
               );
+              console.log(obj);
               return (
                 <tbody key={index}>
                   <tr>
                     <td>{index + 1}</td>
-                    <td>{obj.name}</td>
-                    <td>{category.name}</td>
+                    <td>{obj?.name}</td>
+                    <td>{category?.name}</td>
                     <td>{item.products.name}</td>
                     <td>
                       <label htmlFor="arrow-upward" onClick={ClickModal}>

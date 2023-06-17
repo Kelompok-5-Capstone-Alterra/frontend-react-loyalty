@@ -141,8 +141,8 @@ const Koin = () => {
                 <tbody key={index}>
                   <tr>
                     <td>{index + 1}</td>
-                    <td>{obj.name}</td>
-                    <td>{reward.name}</td>
+                    <td>{obj?.name}</td>
+                    <td>{reward?.name}</td>
                     <td>{item.products.coins}</td>
                     <td>{dateFormat(item.created_at)}</td>
                     <td>
